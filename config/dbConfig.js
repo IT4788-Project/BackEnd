@@ -1,9 +1,11 @@
 module.exports = {
-    HOST: 'localhost',
-    USER: 'root',
-    PASSWORD: '',
-    DB: 'node_sequelize_api_db',
+    HOST: 'mysqldb.cing4ikwlyqw.ap-southeast-1.rds.amazonaws.com',
+    USER: 'admin',
+    PASSWORD: '12345678',
+    DB: 'nutrition',
     dialect: 'mysql',
+    port: 3306,
+
 
     pool: {
         max: 5,
