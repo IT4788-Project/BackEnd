@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/GitlabLint.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend_nutrition_diary.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,9 +25,9 @@
     <selected>-1</selected>
     <servers />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2XsJHevUmVDdBLaUII2DXNXddEF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -58,6 +46,7 @@
     "dart.analysis.tool.window.visible": "false",
     "eu.ydp.idea.ts.spec.generator.settings.spec.template": "import {$ClassName$} from '$TestsRelativePath$../src/$classRelativePath$/$ClassName$';\n\ndescribe('$ClassName$', () => {\n  let $ObjName$:$ClassName$;\n\n  beforeEach(() => {\n    $ObjName$ = new $ClassName$();\n  });\n\n  describe('', () => {\n    it('', () => {\n      // given\n\n      // when\n\n      // then\n    });\n  });\n});\n",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/trung/git/nutrition_diary",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -78,6 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699411769820</updated>
       <workItem from="1699411771012" duration="1515000" />
+      <workItem from="1699882597174" duration="6261000" />
     </task>
     <servers />
   </component>

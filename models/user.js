@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("user", {
+    class User extends Model {
+        static associate(models) {
+            // define association here
+        }
+
+    }
+    User.init({
         user_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -14,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         user_password: {
             type: DataTypes.STRING
         },
-    })
-    return User
+    },
+        {
+        sequelize,
+        modelName: 'user',
+    });
+    return User;
 }
