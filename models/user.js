@@ -1,12 +1,14 @@
+const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
         static associate(models) {
-            // define association here
+            User.hasMany(models.nutrition_diary, { foreignKey: 'user_id' ,onUpdate: 'RESTRICT',onDelete: 'RESTRICT'})
+            User.hasMany(models.healthy_index, { foreignKey: 'user_id' ,onUpdate: 'RESTRICT',onDelete: 'RESTRICT'})
+            User.hasMany(models.healthy_goal, { foreignKey: 'user_id' ,onUpdate: 'RESTRICT',onDelete: 'RESTRICT'})
         }
-
     }
     User.init({
-        user_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -18,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         user_password: {
+            type: DataTypes.STRING
+        },
+        user_phone: {
             type: DataTypes.STRING
         },
     },

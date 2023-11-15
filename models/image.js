@@ -1,6 +1,13 @@
+const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    const Image = sequelize.define("image", {
-        image_id: {
+    class Image extends Model {
+        static associate(models) {
+            Image.belongsTo(models.dish, { foreignKey: 'image_id' })
+            Image.belongsTo(models.food, { foreignKey: 'image_id' })
+        }
+    }
+    Image.init({
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -8,9 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         image_name: {
             type: DataTypes.STRING
         },
-        image_url: {
+        image_path: {
             type: DataTypes.STRING
         },
-    })
-    return Image
+    },
+        {
+        sequelize,
+        modelName: 'image',
+    });
+
 }

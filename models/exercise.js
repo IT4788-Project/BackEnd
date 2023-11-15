@@ -1,6 +1,12 @@
+const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    const Exercise = sequelize.define("exercise", {
-        exercise_id: {
+    class Exercise extends Model {
+        static associate(models) {
+
+        }
+    }
+    Exercise.init({
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -14,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         calories_burned: {
             type: DataTypes.INTEGER
         },
+    },
+        {
+        sequelize,
+        modelName: 'exercise',
+
     })
     return Exercise
 }

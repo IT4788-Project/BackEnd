@@ -1,17 +1,30 @@
+const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    const Image = sequelize.define("image", {
-        image_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        image_name: {
-            type: DataTypes.STRING
-        },
-        image_description: {
-            type: DataTypes.TEXT
+   class Nutrition_diary extends Model {
+       static associate(models) {
+              Nutrition_diary.belongsTo(models.user, { foreignKey: 'user_id' })
+       }
+   }
+    Nutrition_diary.init({
+         id: {
+              type: DataTypes.INTEGER,
+              primaryKey: true,
+              autoIncrement: true
+         },
+        user_id: {
+                type: DataTypes.INTEGER
         },
 
+         time: {
+              type: DataTypes.TIME
+         }
+
+    },
+    {
+        sequelize,
+        modelName: 'nutrition_diary',
     })
-    return Image
+
+    return Nutrition_diary
+
 }
