@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         image_id: {
             type: DataTypes.INTEGER
         }
+        }, {
+            timestamps: false // disable createdAt and updatedAt
 
     })
+
     return Dish
 }

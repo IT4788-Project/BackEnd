@@ -1,13 +1,6 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Healthy_index extends Model {
-        static associate(models) {
-
-
-
-        }
-    }
-    Healthy_index.init({
+    const Healthy_index = sequelize.define("healthy_index", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -28,14 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         bmr: {
             type: DataTypes.INTEGER
         },
+    },{
+        timestamps: false
+        }
 
-
-    },
-
-        {
-        sequelize,
-        modelName: 'healthy_index',
-
-    })
+    )
     return Healthy_index
 }

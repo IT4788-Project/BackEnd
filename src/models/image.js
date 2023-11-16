@@ -1,12 +1,7 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Image extends Model {
-        static associate(models) {
 
-
-        }
-    }
-    Image.init({
+    const Image = sequelize.define("image",{
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -18,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         image_path: {
             type: DataTypes.STRING
         },
-    },
-        {
-        sequelize,
-        modelName: 'image',
-    });
-
+    })
+    return Image
 }

@@ -1,27 +1,6 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class User extends Model {
-        static associate(models) {
-            User.hasMany(models.Dish, {
-                foreignKey: 'user_id',
-                as: 'dishes'
-            })
-            User.hasMany(models.Healthy_index, {
-                foreignKey: 'user_id',
-                as: 'healthy_indexes'
-            })
-            User.hasMany(models.Healthy_goal, {
-                foreignKey: 'user_id',
-                as: 'healthy_goals'
-            })
-            User.hasMany(models.Image, {
-                foreignKey: 'user_id',
-                as: 'images'
-            })
-
-        }
-    }
-    User.init({
+    const User = sequelize.define("user", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -41,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     },
         {
-        sequelize,
-        modelName: 'user',
-    });
-    return User;
+            timestamps: false
+        }
+    )
+    return User
 }

@@ -1,16 +1,7 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class Post extends Model {
-        static associate(models) {
-            Post.belongsTo(models.Healthy_goal, {
-                foreignKey: 'health_goal_id',
-                as: 'health_goal'
-            })
-
-        }
-    }
-    Post.init({
+    const Post = sequelize.define("post", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -29,18 +20,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER
         },
         post_text: {
-            type: DataTypes.STRING
+            type: DataTypes.TEXT
         },
-        post_image: {
-            type: DataTypes.STRING
-        },
-        health_goal_id: {
-            type: DataTypes.INTEGER
-        }
-        },
-    {
-        sequelize,
-            modelName: 'post',
-    });
+    },
+
+        {
+            timestamps: false
+        })
+
     return Post
 }

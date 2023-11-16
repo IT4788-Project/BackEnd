@@ -30,6 +30,9 @@ module.exports= (sequelize, DataTypes )=> {
                 type: DataTypes.STRING
             },
 
-        })
+        },{
+            timestamps:false
+        }
+        )
     return Food
 }

@@ -1,12 +1,6 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Exercise extends Model {
-        static associate(models) {
-            models.exercise.belongsToMany(models.user, { through: 'user_exercise' })
-
-        }
-    }
-    Exercise.init({
+    const Exercise = sequelize.define("exercise", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -21,11 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         calories_burned: {
             type: DataTypes.INTEGER
         },
-    },
-        {
-        sequelize,
-        modelName: 'exercise',
-
+    }, {
+        timestamps: false // disable createdAt and updatedAt
     })
     return Exercise
 }

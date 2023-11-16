@@ -1,13 +1,6 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports=(sequelize,DataTypes)=>{
-    class Lunch extends Model{
-        static associate(models){
-            //1 lunch có nhiều nutriton_diary
-            Lunch.hasMany(models.Nutrition_diary,{foreignKey:'lunch_id'})
-
-        }
-    }
-    Lunch.init({
+    const Lunch=sequelize.define("lunch",{
         id:{
             type:DataTypes.INTEGER,
             primaryKey:true,
@@ -21,8 +14,8 @@ module.exports=(sequelize,DataTypes)=>{
         },
 
     },{
-        sequelize,
-        modelName:'lunch',
-    })
+        timestamps:false
+        }
+    )
     return Lunch
 }
