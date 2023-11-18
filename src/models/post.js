@@ -7,23 +7,16 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        like: {
+        count_like: {
             type: DataTypes.INTEGER
         },
-        love: {
-            type: DataTypes.INTEGER
-        },
-        tym: {
-            type: DataTypes.INTEGER
-        },
-        comment: {
+        count_comment: {
             type: DataTypes.INTEGER
         },
         post_text: {
             type: DataTypes.TEXT
         },
     },
-
         {
             timestamps: false
         })

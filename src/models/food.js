@@ -1,4 +1,4 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+// Định nghĩa model Food
 module.exports= (sequelize, DataTypes )=> {
     const Food = sequelize.define("food",
         {
@@ -7,9 +7,12 @@ module.exports= (sequelize, DataTypes )=> {
                 primaryKey: true,
                 autoIncrement: true
             },
-            food_name: {
-                type: DataTypes.STRING
+            //name la duy nhat
+            name: {
+                type: DataTypes.STRING,
+                unique: true
             },
+
             calories: {
                 type: DataTypes.INTEGER
             },

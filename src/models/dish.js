@@ -6,19 +6,14 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        dish_name: {
+        name: {
             type: DataTypes.STRING
         },
         dish_description: {
             type: DataTypes.TEXT
         },
-        image_id: {
-            type: DataTypes.INTEGER
-        }
         }, {
             timestamps: false // disable createdAt and updatedAt
-
     })
-
     return Dish
 }

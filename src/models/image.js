@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         image_path: {
             type: DataTypes.STRING
         },
+
+    },{
+        timestamps:false
     })
     return Image
 }
