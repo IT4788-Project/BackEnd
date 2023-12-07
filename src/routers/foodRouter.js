@@ -8,14 +8,14 @@ const router = require('express').Router()
 
 
 // use routers
-router.post('/foods' , foodController.addFood)
+router.post('/' , foodController.addFood)
 
-router.get('/foods', foodController.getAllfood)
+router.get('/', foodController.getAllfood)
 
-router.get('/foods/:id', foodController.getOneFood)
+router.get('/:id', foodController.getOneFood)
 
-router.put('/foods/:id', foodController.updateFood)
+router.put('/:id', foodController.updateFood)
 
-router.delete('/foods/:id', foodController.deleteFood)
+router.delete('/:id', foodController.deleteFood)
 
 module.exports = router

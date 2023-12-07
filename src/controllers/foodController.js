@@ -22,6 +22,7 @@ const addFood = async (req, res) => {
             unit: req.body.unit,
         }
         console.log('info')
+
         console.log(info)
 
         const food = await Food.create(info)
