@@ -1,10 +1,7 @@
 const db = require('../models')
 
-
 // create main Model
 const Food = db.food
-
-
 // main work
 
 // 1. create Food
