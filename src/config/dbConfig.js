@@ -6,7 +6,6 @@ module.exports = {
     dialect: 'mysql',
     port: 3306,
 
-
     pool: {
         max: 5,
         min: 0,

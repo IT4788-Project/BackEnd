@@ -1,4 +1,6 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto')
+
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define("user", {
         id: {
@@ -6,22 +8,58 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        user_name: {
+        name: {
             type: DataTypes.STRING
         },
-        user_email: {
+        email: {
             type: DataTypes.STRING
         },
-        user_password: {
-            type: DataTypes.STRING
+        password: {
+            type: DataTypes.STRING(255),
+            set(value) {
+                const saltRounds = 10;
+                const hashedPassword = bcrypt.hashSync(value, saltRounds);
+                this.setDataValue('password', hashedPassword);
+            }
         },
-        user_phone: {
-            type: DataTypes.STRING
+        passwordChangedAt: {
+            type: DataTypes.DATE
         },
+        passwordCode: {
+            type: DataTypes.STRING(255)
+        },
+        codeResetExpires: {
+            type: DataTypes.STRING(255)
+        },
+
+
     },
         {
             timestamps: false
         }
     )
+    User.prototype.checkPassword = async function(newPassword){
+        try{
+            const check = await bcrypt.compare(newPassword,this.password)
+            console.log('check : '+check)
+            return check
+        }
+        catch (error){
+            console.log(error)
+
+        }
+    }
+    User.prototype.createPasswordChangedToken = async function (genericParam) {
+        try {
+            const code = crypto.randomInt(100000, 1000000);
+            console.log("code = " + code);
+            this.passwordCode = crypto.createHash('sha256').update(code.toString()).digest('hex');
+            this.codeResetExpires = Date.now() + 15 * 60 * 1000;
+            return code;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return User
 }

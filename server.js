@@ -1,21 +1,35 @@
-const express = require('express')
-const cors = require('cors')
 
-
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
 const app = express()
-//port
-const PORT =8080
-// middleware
+
+// Port
+const PORT = process.env.PORT || 8080;
+
+// Middleware
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cors())
+app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cors());
+app.use(cookieParser());
+
+// Routers
+const userRouter = require('./src/routers/userRouter.js');
+const foodRouter = require('./src/routers/foodRouter.js')
+const authRouter = require('./src/routers/authRouter.js');
 
 
-// routers
-const food_router = require('./src/routers/foodRouter.js')
-app.use('/api/foods', food_router)
+// Routes
+app.use('/api/users', userRouter);
+app.use('/api/foods',foodRouter);
+app.use('/api/auths',authRouter);
 
-//server
+
+
+// Start the server
 app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`)
-})
+    console.log(`Server is running on port ${PORT}`);
+});
