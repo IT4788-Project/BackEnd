@@ -1,5 +1,6 @@
 const db = require('../models');
 const User = db.user;
+const { Op } = require("sequelize");
 const crypto = require('crypto');
 const Yup = require('yup');
 const JwtService = require("../services/jwtServices.js");
@@ -151,52 +152,67 @@ const forgotPassword = async (req, res) => {
         })
     }
 }
-
 const checkCode = async (req, res) => {
     try {
         const schema = Yup.object().shape({
             verificationCode: Yup.number().required(),
         });
+
         try {
             await schema.validate(req.body);
         } catch (e) {
-            console.error(e)
+            console.error(e);
             return res.status(400).json({
-                    statusCode : 400,
-                    message:"Bad Request",
-                    error:e.errors
-                }
-            );
-        }
-        console.log("verificationCode")
-        let verificationCode = req.body.verificationCode
-        console.log("code :" + verificationCode);
-        const passwordCode = crypto.createHash('sha256').update(verificationCode.toString()).digest('hex');
-        console.log("hashedToken:", passwordCode);
-        const user = await User.findOne({ passwordCode : passwordCode, codeResetExpires: {$gt: Date.now()}})
-        console.log("user:", user.id);
-        if (!user) {
-            return res.status(401).json({
-                statusCode : 401,
-                message:"Unauthorized",
-                error: 'User does not exist'
+                statusCode: 400,
+                message: "Bad Request",
+                error: e.errors,
             });
         }
-        console.log(">>>>>123")
+        console.log("verificationCode");
+        const inputVerificationCode = req.body.verificationCode;
+        console.log("code:", inputVerificationCode);
+        const hashedVerificationCode = crypto
+            .createHash("sha256")
+            .update(inputVerificationCode.toString())
+            .digest("hex");
+        console.log("hashedToken:", hashedVerificationCode);
+
+        const user = await User.findOne({
+            where: {
+                passwordCode: hashedVerificationCode,
+                codeResetExpires: {
+                    [Op.gt]: Date.now(),
+                },
+            },
+        });
+
+        if (!user) {
+            return res.status(401).json({
+                statusCode: 401,
+                message: "Unauthorized",
+                error: "User does not exist",
+            });
+        }
+        resetUserId = user.id
+
+        console.log("user:", user.id);
         console.log("resetUserId:", resetUserId)
+
         res.status(200).json({
             statusCode: 200,
-            message:"OK",
-            notification: "Valid code"
-        })
+            message: "OK",
+            notification: "Valid code",
+        });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({
             statusCode: 500,
-            message: 'Internal Server Error',
+            message: "Internal Server Error",
             error: e.errors
-        })
+        });
     }
 };
+
 
 const resetPassword = async (req, res) => {
     try {
