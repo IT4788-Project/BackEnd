@@ -1,120 +1,228 @@
 const db = require('../models');
 const User = db.user;
 const crypto = require('crypto');
+const Yup = require('yup');
 const JwtService = require("../services/jwtServices.js");
 const {BadRequestError, UnauthorizedError, ValidationError} = require("../utils/apiError.js");
 const sendMail = require('../middlerwares/sendMail.js')
 let resetUserId;
-
 const login = async (req, res) => {
     try {
-        const {email,password}= req.body
-        // check user is exist
-        const user = await User.findOne({where:{email}})
-        if(!user)
-            new BadRequestError("User not found")
-        const isPassword = await user.checkPassword(password)
-        if(!isPassword)
-            new UnauthorizedError("Invalid password");
-        // create token
-        console.log(">>>>user"+user.id)
-        const accessToken = JwtService.jwtSign(user.id,{expiresIn: "7d"});
-        console.log(" >>>>>> accessToken")
-        console.log(accessToken)
-        // hide password
-        const {name:hashedName,email: hashedEmail,password : hashedPassword, ...userDate} = user.get()
-        const resBody  = {
-            accessToken,
-            userDate
-        }
-        return res.status(200).json({
-            success : true,
-            resBody
+        const schema = Yup.object().shape({
+            email: Yup.string().email().required().test(
+                'is-gmail',
+                'Email must be a Gmail address',
+                (value) => {
+                    if (value) {
+                        return value.endsWith('@gmail.com');
+                    }
+                    return false;
+                }
+            ),
+            password: Yup.string().required(),
         });
-    } catch (error) {
-        return res.status(400).json({msg: error.message});
+        try {
+            await schema.validate(req.body);
+        } catch (e) {
+            console.error(e)
+            return res.status(400).json({
+                    statusCode : 400,
+                    message:"Bad Request",
+                    error:e.errors
+                }
+            );
+        }
+        let { email, password } = req.body;
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(401).json({
+                statusCode : 401,
+                message:"Unauthorized",
+                error: 'User does not exist'
+            });
+        }
+        const isPasswordValid = await user.checkPassword(password);
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                statusCode : 401,
+                message:"Unauthorized",
+                error: 'Invalid password.'
+            });
+        }
+        const accessToken = JwtService.jwtSign(user.id, { expiresIn: '7d' });
+        const { name, email: userEmail, ...userData } = user.get();
+        const text = {
+            accessToken,
+            userData,
+        };
+        return res.status(200).json({
+            statusCode: 200,
+            message:"OK",
+            data: text,
+        });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error:e.errors
+        });
     }
-}
+};
 const logout = async (req, res) => {
     try {
         JwtService.jwtBlacklistToken(JwtService.jwtGetToken(req));
         res.status(200).json({
-            success:true,
-            msg: "Authorized"});
-    } catch (error) {
-        next(error);
+            statusCode: 200,
+            message:"Log out successfully",
+        });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error: e.errors
+        });
+
     }
 }
-
 const forgotPassword = async (req, res) => {
     try {
-        const {email} = req.body
-        console.log("email:", email);
-        if (!email) {
-            return (res.status(400).json({success: false, mes: "Email không tồn tại"}))
+        const schema = Yup.object().shape({
+            email: Yup.string().email().required().test(
+                'is-gmail',
+                'Email must be a Gmail address',
+                (value) => {
+                    if (value) {
+                        return value.endsWith('@gmail.com');
+                    }
+                    return false;
+                }
+            ),
+        });
+        try {
+            await schema.validate(req.body);
+        } catch (e) {
+            console.error(e)
+            return res.status(400).json({
+                    statusCode : 400,
+                    message:"Bad Request",
+                    error:e.errors
+                }
+            );
         }
-        const user = await User.findOne({where: {email}});
+        let { email, password } = req.body;
+        const user = await User.findOne({ where: { email } });
         if (!user) {
-            throw new BadRequestError("User not found");
+            return res.status(401).json({
+                statusCode : 401,
+                message:"Unauthorized",
+                error: 'User does not exist'
+            });
         }
         console.log("user có tồn tai");
         const verificationCode = await user.createPasswordChangedToken()
         console.log("code da luu chua");
         console.log("code:", verificationCode);
         await user.save();
+        resetUserId= user.id;
+        console.log(">>>>>>!>>>>>!>>>>1>"+resetUserId)
         console.log("user da luu ");
         const passwordCode = crypto.createHash('sha256').update(verificationCode.toString()).digest('hex');
-        console.log("hashedToken:", passwordCode);
+        console.log("passwordCode:", passwordCode);
         const html = `Chúc mừng bạn đến với GoodBody, đây là mã code của bạn: ${verificationCode}. Mã này sẽ hết hạn trong 15 phút.`;
-        const data = {
+        const text = {
             email,
             html
         }
-        console.log(data);
-        const rs = await sendMail(data)
+        console.log(text);
+        const rs = await sendMail(text)
         return res.status(200).json({
-            success: true,
-            rs
+            statusCode: 200,
+            message:"OK",
+            data:rs
         })
 
-    } catch (error) {
+    } catch (e) {
         return res.status(500).json({
-            success: false,
-            mes: error.message
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error: e.errors
         })
     }
 }
 
 const checkCode = async (req, res) => {
     try {
-        const {verificationCode} = req.body;
-        console.log("verificationCode:", verificationCode)
-        if (!verificationCode) throw new Error('Missing inputs');
+        const schema = Yup.object().shape({
+            verificationCode: Yup.number().required(),
+        });
+        try {
+            await schema.validate(req.body);
+        } catch (e) {
+            console.error(e)
+            return res.status(400).json({
+                    statusCode : 400,
+                    message:"Bad Request",
+                    error:e.errors
+                }
+            );
+        }
+        console.log("verificationCode")
+        let verificationCode = req.body.verificationCode
         console.log("code :" + verificationCode);
         const passwordCode = crypto.createHash('sha256').update(verificationCode.toString()).digest('hex');
         console.log("hashedToken:", passwordCode);
-        const user = await User.findOne({passwordCode, codeResetExpires: {$gt: Date.now()}})
+        const user = await User.findOne({ passwordCode : passwordCode, codeResetExpires: {$gt: Date.now()}})
         console.log("user:", user.id);
         if (!user) {
-            res.status(400).json({success: false, mes: "Mã code không tồn tại"})
+            return res.status(401).json({
+                statusCode : 401,
+                message:"Unauthorized",
+                error: 'User does not exist'
+            });
         }
-        resetUserId = user.id;
+        console.log(">>>>>123")
         console.log("resetUserId:", resetUserId)
-        res.status(200).json({success: true, mes: "Mã code hợp lệ"})
-    } catch (error) {
-        console.error('Error in checkCode:', error.message);
-        res.status(500).json({success: false, mes: error.message})
-        return false;
+        res.status(200).json({
+            statusCode: 200,
+            message:"OK",
+            notification: "Valid code"
+        })
+    } catch (e) {
+        return res.status(500).json({
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error: e.errors
+        })
     }
 };
 
 const resetPassword = async (req, res) => {
     try {
-        const {newPassword} = req.body;
-        console.log("password: " + req.body);
-        if (!newPassword) return res.status(400).json({success: false, message: 'Missing inputs'});
+        const schema = Yup.object().shape({
+            newPassword:Yup.string().required().min(8),
+        });
+        let newPassword = req.body.newPassword
+        try {
+            await schema.validate(req.body);
+        } catch (e) {
+            console.error(e)
+            return res.status(400).json({
+                    statusCode : 400,
+                    message:"Bad Request",
+                    error:e.errors
+                }
+            );
+        }
         const user = await User.findOne({where: {id: resetUserId}});
-        if (!user) return res.status(404).json({success: false, message: 'User not found'});
+        if (!user) {
+            return res.status(401).json({
+                statusCode : 401,
+                message:"Unauthorized",
+                error: 'User does not exist'
+            });
+        }
         console.log("user_reset:", user.id);
         user.password = newPassword;
         user.passwordCode = null;
@@ -122,12 +230,16 @@ const resetPassword = async (req, res) => {
         user.codeResetExpires = null;
         await user.save();
         return res.status(200).json({
-            success: true,
-            message: 'Password updated',
+            statusCode: 200,
+            message: 'OK',
+            notification: "Password updated"
         });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({success: false, message: 'Something went wrong'});
+    } catch (e) {
+        return res.status(500).json({
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error: e.errors
+        })
     }
 };
 module.exports = {

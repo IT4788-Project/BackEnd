@@ -26,16 +26,13 @@ sequelize.authenticate()
     .catch(err=>{
         console.error('Unable to connect to the database:', err)
     })
-
 const db={}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ focus:false })
     .then(() => {
         console.log('yes re-sync done!')
     })
-
-
 db.lunch = require('./lunch.js')(sequelize, DataTypes)
 db.food = require('./food.js')(sequelize, DataTypes)
 db.dish = require('./dish.js')(sequelize, DataTypes)
@@ -46,22 +43,22 @@ db.exercise = require('./exercise.js')(sequelize, DataTypes)
 db.user = require('./user.js')(sequelize, DataTypes)
 db.post = require('./post.js')(sequelize, DataTypes)
 db.healthy_goal = require('./healthyGoal.js')(sequelize, DataTypes)
-db.healthy_index = require('./healthyIndex.js')(sequelize, DataTypes)
+db.personalInfo = require('./personalInfo.js')(sequelize, DataTypes)
 db.comment = require('./comment.js')(sequelize, DataTypes)
 db.likePost= require('./likePost.js')(sequelize, DataTypes)
 //user
 db.user.hasMany(db.post, { foreignKey: 'from_user_id', as: 'fromUser' });
 db.user.hasMany(db.post, { foreignKey: 'with_user_id', as: 'withUser' });
 db.user.hasMany(db.nutrition_diary);
-db.user.hasMany(db.healthy_index);
+db.user.hasMany(db.personalInfo,{foreignKey: 'userId',onDelete:'cascade',onUpdate:'cascade'});
 db.user.hasMany(db.healthy_goal);
 db.user.hasMany(db.comment);
 db.user.hasMany(db.likePost);
 //healthy_goal
 db.healthy_goal.belongsTo(db.user,{onDelete:'cascade',onUpdate:'cascade'});
 db.healthy_goal.hasOne(db.post);
-//healthy_index
-db.healthy_index.belongsTo(db.user,{onDelete:'cascade',onUpdate:'cascade'});
+//personalInfo
+db.personalInfo.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpdate:'cascade'});
 
 //post
 db.post.belongsTo(db.healthy_goal,{onDelete:'cascade',onUpdate:'cascade'});

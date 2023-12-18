@@ -12,8 +12,11 @@ const authMiddleware = async (req, res, next) => {
         console.log("Decoded Token in Middleware:", decoded);
         req.userId = decoded.userId;
         return next();
-    } catch (error) {
-        next(new BadTokenError())
+    } catch (e) {
+        console.log(e)
+        res.status(401).json(
+            {JSON : new BadTokenError()}
+        )
     }
 };
 
