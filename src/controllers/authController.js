@@ -112,7 +112,7 @@ const forgotPassword = async (req, res) => {
                 }
             );
         }
-        let { email, password } = req.body;
+        let { email } = req.body;
         const user = await User.findOne({ where: { email } });
         if (!user) {
             return res.status(401).json({
