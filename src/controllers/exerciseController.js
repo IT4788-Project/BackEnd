@@ -81,7 +81,6 @@ const updateExercise = async (req, res) => {
 
 
 }
-
 module.require={
     addExercise
 }
