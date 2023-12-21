@@ -6,15 +6,18 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
+        exerciseTime: {
+            type: DataTypes.DATE
+        },
         exercise_name: {
             type: DataTypes.STRING
         },
         exercise_description: {
             type: DataTypes.TEXT
         },
-        calories_burned: {
-            type: DataTypes.INTEGER
-        },
+        // calories_burned: {
+        //     type: DataTypes.INTEGER
+        // },
     }, {
         timestamps: false // disable createdAt and updatedAt
     })

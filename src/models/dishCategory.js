@@ -1,18 +1,16 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-
-    const Image = sequelize.define("image",{
+    const DishCategory = sequelize.define("dishCategory",{
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        image_path: {
-            type: DataTypes.STRING
+        name: {
+            type: DataTypes.STRING(255)
         },
-
-    },{
-        timestamps:false
+    }, {
+        timestamps: false
     })
-    return Image
+    return DishCategory
 }

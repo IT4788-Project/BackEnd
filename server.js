@@ -20,12 +20,15 @@ app.use(cookieParser());
 const userRouter = require('./src/routers/userRouter.js');
 const foodRouter = require('./src/routers/foodRouter.js')
 const authRouter = require('./src/routers/authRouter.js');
+const personalInfoRouter  = require('./src/routers/personalInfoRouter.js');
 
 
 // Routes
 app.use('/api/users', userRouter);
 app.use('/api/foods',foodRouter);
 app.use('/api/auths',authRouter);
+app.use('/api/personalInfos',personalInfoRouter);
+
 
 
 

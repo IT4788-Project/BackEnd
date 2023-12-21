@@ -31,11 +31,14 @@ module.exports = (sequelize, DataTypes) => {
         codeResetExpires: {
             type: DataTypes.STRING(255)
         },
+            status: {
+                type: DataTypes.BOOLEAN, defaultValue: true
+            },
 
 
     },
         {
-            timestamps: false
+            timestamps: true
         }
     )
     User.prototype.checkPassword = async function(newPassword){

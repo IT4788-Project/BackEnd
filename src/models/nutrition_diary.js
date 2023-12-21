@@ -6,10 +6,8 @@ module.exports = (sequelize, DataTypes) => {
            primaryKey: true,
            autoIncrement: true
        },
-
-
        time: {
-           type: DataTypes.TIME
+           type: DataTypes.DATE
        },
 
    }, {

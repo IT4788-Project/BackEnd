@@ -5,29 +5,29 @@ const PersonalInfo = db.personalInfo;
 // 1. add personal information
 const addPersonalInfo = async (req, res) => {
     try {
-        const {fullName, birthDay, height, gender, nutritionalGoal, initialWeight, currentWeight, targetWeight, hip, waist,} = req.body;
+        const {fullName, birthDay, height, gender, nutritionalGoal, initialWeight, currentWeight, targetWeight, hip, waist,userId} = req.body;
         const schema = Yup.object().shape({
             fullName: Yup.string().required(),
-            birthDay: Yup.date().required(),
-            height: Yup.number().required(),
+            birthDay: Yup.date().nullable(),
+            height: Yup.number().nullable(),
             gender: Yup.string().required(),
-            nutritionalGoal: Yup.string().required(),
-            initialWeight: Yup.number().required(),
-            currentWeight: Yup.number().required(),
-            targetWeight: Yup.number().required(),
-            hip: Yup.number().required(),
-            waist: Yup.number().required(),
+            nutritionalGoal: Yup.string().nullable(),
+            initialWeight: Yup.number().nullable(),
+            currentWeight: Yup.number().nullable(),
+            targetWeight: Yup.number().nullable(),
+            hip: Yup.number().nullable(),
+            waist: Yup.number().nullable(),
             userId:Yup.number().required(),
         });
         try {
             await schema.validate(req.body);
         } catch (e) {
             return res.status(400).json({
-                error: 'Invalid input',
-                message: e.message
+                statusCode: 400,
+                message:"Bad Request",
+                error:e.errors
             });
         }
-
         const personalInfo = await PersonalInfo.create({
             fullName,
             birthDay,
@@ -39,71 +39,106 @@ const addPersonalInfo = async (req, res) => {
             targetWeight,
             hip,
             waist,
+            userId
         });
         return res.status(201).json({
-            success: true,
+            statusCode: 200,
+            message:"Created",
             personalInfo,
         });
     } catch (error) {
         console.error('Error:', error);
         return res.status(500).json({
-            error: 'Internal Server Error'
+            statusCode:500,
+            message: 'Internal Server Error',
+            error: e.errors
         });
     }
 };
 
-// 3. get single personal information
+// 2. get single personal information
 const getOnePersonalInfo = async (req, res) => {
     try {
-        let id = req.params.id;
-        const personalInfo = await PersonalInfo.findOne({ where: { id: id } });
-        res.status(200).json({
-            success: true,
-            personalInfo,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            error: 'Internal Server Error',
-        });
-    }
-};
-// 4. update personal information
-const updatePersonalInfo = async (req, res) => {
-    try {
-        let id = req.params.id;
-        const [updatedRows] = await PersonalInfo.update(req.body, { where: { id: id } });
-        if (updatedRows === 0) {
-            return res.status(404).json({ error: 'Personal information not found' });
+        const { userId } = req.params;
+        const personalInfo = await PersonalInfo.findOne({ where: { userId: userId } });
+        if (!personalInfo) {
+            return res.status(404).json({
+                statusCode: 404,
+                message: "Not Found",
+                error: "Personal information not found for the given user ID",
+            });
         }
         res.status(200).json({
-            success: true,
-            message: 'Personal information updated successfully',
+            statusCode: 200,
+            message: "OK",
+            personalInfo,
         });
-    } catch (error) {
-        console.log(error);
+    } catch (e) {
+        console.error(e);
         res.status(500).json({
-            error: 'Internal Server Error',
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error : e.errors
         });
     }
 };
 
-// 5. delete personal information by id
-const deletePersonalInfo = async (req, res) => {
-    let id = req.params.id;
-    const deletedRows = await PersonalInfo.destroy({ where: { id: id } });
-    if (deletedRows === 0) {
-        return res.status(404).json({ error: 'Personal information not found' });
+// 3. update personal information
+const updatePersonalInfo = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const [updatedRows] = await PersonalInfo.update(req.body, { where: { userId: userId } });
+        if (updatedRows === 0) {
+            return res.status(404).json({
+                statusCode: 404,
+                message: "Not Found",
+                error: 'Personal information not found' });
+        }
+        res.status(200).json({
+            statusCode: 200,
+            message: 'OK',
+            notification : "Cập nhật thành công"
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({
+            statusCode : 500,
+            message: 'Internal Server Error',
+            error: e.errors
+        });
     }
-    res.status(200).json({
-        success: true,
-        message: 'Personal information deleted successfully',
-    });
 };
+
+// 4. delete personal information by userId
+const deletePersonalInfo = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const deletedRows = await PersonalInfo.destroy({ where: { userId: userId } });
+        if (deletedRows === 0) {
+            return res.status(404).json({
+                statusCode: 404,
+                message: "Not Found",
+                error: 'Personal information not found',
+            });
+        }
+        res.status(200).json({
+            statusCode: 200,
+            message:"OK",
+            notification: 'Xoá thông tin cá nhân thành công',
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({
+            statusCode: 500,
+            message: 'Internal Server Error',
+            error:e.errors
+        });
+    }
+};
+
 
 module.exports = {
     addPersonalInfo,
-    getAllPersonalInfo,
     getOnePersonalInfo,
     updatePersonalInfo,
     deletePersonalInfo,

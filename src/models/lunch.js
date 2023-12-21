@@ -12,7 +12,10 @@ module.exports=(sequelize,DataTypes)=>{
         lunch_description:{
             type:DataTypes.TEXT
         },
+            sumCalories:{
+                type:DataTypes.INTEGER
 
+            }
     },{
         timestamps:false
         }

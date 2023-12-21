@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         date: {
             type: DataTypes.DATE
         },
-        user_id: {
+            userId: {
             type: DataTypes.INTEGER
         },
-        post_id: {
+            postId: {
             type: DataTypes.INTEGER
         },
     },

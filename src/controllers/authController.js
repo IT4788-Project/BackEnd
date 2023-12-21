@@ -6,7 +6,7 @@ const Yup = require('yup');
 const JwtService = require("../services/jwtServices.js");
 const {BadRequestError, UnauthorizedError, ValidationError} = require("../utils/apiError.js");
 const sendMail = require('../middlerwares/sendMail.js')
-let resetUserId;
+
 const login = async (req, res) => {
     try {
         const schema = Yup.object().shape({
@@ -34,7 +34,14 @@ const login = async (req, res) => {
             );
         }
         let { email, password } = req.body;
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({
+            where: {
+            [Op.or]: [
+                {email: email,
+                    status: true},
+            ],
+        },
+                });
         if (!user) {
             return res.status(401).json({
                 statusCode : 401,
@@ -113,7 +120,15 @@ const forgotPassword = async (req, res) => {
             );
         }
         let { email } = req.body;
-        const user = await User.findOne({ where: { email } });
+
+        const user = await User.findOne({
+            where: {
+                [Op.or]: [
+                    {email: email,
+                        status: true},
+                ],
+            },
+        });
         if (!user) {
             return res.status(401).json({
                 statusCode : 401,
@@ -143,7 +158,6 @@ const forgotPassword = async (req, res) => {
             message:"OK",
             data:rs
         })
-
     } catch (e) {
         return res.status(500).json({
             statusCode: 500,
@@ -155,9 +169,9 @@ const forgotPassword = async (req, res) => {
 const checkCode = async (req, res) => {
     try {
         const schema = Yup.object().shape({
+            email:Yup.string().required(),
             verificationCode: Yup.number().required(),
         });
-
         try {
             await schema.validate(req.body);
         } catch (e) {
@@ -176,10 +190,11 @@ const checkCode = async (req, res) => {
             .update(inputVerificationCode.toString())
             .digest("hex");
         console.log("hashedToken:", hashedVerificationCode);
-
         const user = await User.findOne({
             where: {
+                email:email,
                 passwordCode: hashedVerificationCode,
+                status: true,
                 codeResetExpires: {
                     [Op.gt]: Date.now(),
                 },
@@ -187,22 +202,20 @@ const checkCode = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(401).json({
-                statusCode: 401,
-                message: "Unauthorized",
-                error: "User does not exist",
+            return res.status(400).json({
+                statusCode: 400,
+                message: "Bad Request",
             });
         }
-        resetUserId = user.id
-
         console.log("user:", user.id);
         console.log("resetUserId:", resetUserId)
-
-        res.status(200).json({
-            statusCode: 200,
-            message: "OK",
-            notification: "Valid code",
-        });
+        if(resetUserId===user.id){
+            res.status(200).json({
+                statusCode: 200,
+                message: "OK",
+                notification: "Valid code",
+            });
+        }
     } catch (e) {
         console.error(e);
         return res.status(500).json({
@@ -213,10 +226,10 @@ const checkCode = async (req, res) => {
     }
 };
 
-
 const resetPassword = async (req, res) => {
     try {
         const schema = Yup.object().shape({
+            email: email,
             newPassword:Yup.string().required().min(8),
         });
         let newPassword = req.body.newPassword
@@ -231,12 +244,12 @@ const resetPassword = async (req, res) => {
                 }
             );
         }
-        const user = await User.findOne({where: {id: resetUserId}});
+        const user = await User.findOne({where: {
+                email: email,status: true}});
         if (!user) {
-            return res.status(401).json({
-                statusCode : 401,
-                message:"Unauthorized",
-                error: 'User does not exist'
+            return res.status(400).json({
+                statusCode : 400,
+                message:"Bad Request",
             });
         }
         console.log("user_reset:", user.id);
@@ -245,6 +258,8 @@ const resetPassword = async (req, res) => {
         user.passwordChangedAt = Date.now();
         user.codeResetExpires = null;
         await user.save();
+        console.log("user:", user.id);
+        console.log("resetUserId:", resetUserId)
         return res.status(200).json({
             statusCode: 200,
             message: 'OK',

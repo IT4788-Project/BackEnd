@@ -6,7 +6,6 @@ module.exports=(sequelize,DataTypes)=>{
             primaryKey: true,
             autoIncrement: true
         },
-
         quantity: {
             type: DataTypes.INTEGER
         },
