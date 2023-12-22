@@ -109,8 +109,10 @@ const updateExercise = async (req, res) => {
     }
 };
 
+
 module.exports = {
     addExercise,
     updateExercise,
     getAllExerciseNutrition
 };
+
