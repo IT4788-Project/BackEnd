@@ -227,10 +227,10 @@ const checkCode = async (req, res) => {
 const resetPassword = async (req, res) => {
     try {
         const schema = Yup.object().shape({
-            email: email,
+            email:Yup.string().required(),
             newPassword:Yup.string().required().min(8),
         });
-        let newPassword = req.body.newPassword
+        let {email, newPassword} = req.body
         try {
             await schema.validate(req.body);
         } catch (e) {
