@@ -183,7 +183,7 @@ const checkCode = async (req, res) => {
             });
         }
         console.log("verificationCode");
-        const inputVerificationCode = req.body.verificationCode;
+        const {email,inputVerificationCode} = req.body;
         console.log("code:", inputVerificationCode);
         const hashedVerificationCode = crypto
             .createHash("sha256")
@@ -194,7 +194,6 @@ const checkCode = async (req, res) => {
             where: {
                 email:email,
                 passwordCode: hashedVerificationCode,
-                status: true,
                 codeResetExpires: {
                     [Op.gt]: Date.now(),
                 },
@@ -225,7 +224,6 @@ const checkCode = async (req, res) => {
         });
     }
 };
-
 const resetPassword = async (req, res) => {
     try {
         const schema = Yup.object().shape({
@@ -245,7 +243,7 @@ const resetPassword = async (req, res) => {
             );
         }
         const user = await User.findOne({where: {
-                email: email,status: true}});
+                email: email}});
         if (!user) {
             return res.status(400).json({
                 statusCode : 400,

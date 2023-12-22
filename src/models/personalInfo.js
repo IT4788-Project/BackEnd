@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING(100)
         },
         birthDay:{
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         height: {
             type: DataTypes.INTEGER

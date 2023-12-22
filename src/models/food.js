@@ -7,10 +7,8 @@ module.exports= (sequelize, DataTypes )=> {
                 primaryKey: true,
                 autoIncrement: true
             },
-            //name la duy nhat
             name: {
                 type: DataTypes.STRING,
-                unique: true
             },
 
             calories: {

@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
         },
         timeStart:{
-            type:DataTypes.DATE
+            type:DataTypes.DATEONLY
         },
         timeEnd:{
-            type:DataTypes.DATE
+            type:DataTypes.DATEONLY
         }
     },
         {

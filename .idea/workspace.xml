@@ -5,30 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/controllers/exerciseController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/nutritionDiaryController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/admin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/dishCategory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/foodCategory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/food_lunch.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/heathy.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/likeDish.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/reportPost.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/roleAdmin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/personalInfoRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/personalInfoController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/personalInfoController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/food_dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/food_dish.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/healthyGoal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/healthyGoal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/likePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/likePost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/lunch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lunch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/nutrition_diary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/nutrition_diary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/exerciseController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/exerciseController.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +118,10 @@
       <workItem from="1702962483277" duration="6100000" />
       <workItem from="1702999660556" duration="4672000" />
       <workItem from="1703045413362" duration="1704000" />
-      <workItem from="1703077668549" duration="16951000" />
+      <workItem from="1703077668549" duration="20137000" />
+      <workItem from="1703176874344" duration="1197000" />
+      <workItem from="1703179427385" duration="4000" />
+      <workItem from="1703182567992" duration="606000" />
     </task>
     <servers />
   </component>

@@ -6,22 +6,16 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true
         },
         userName: {
-            type: DataTypes.STRING(10),
-            allowNull: false,
-            unique: true
+            type: DataTypes.STRING(200),
         },
         passWord: {
             type: DataTypes.STRING(50),
-            allowNull: false,
         },
         email: {
             type: DataTypes.STRING(50),
-            allowNull: false,
-            unique: true
         },
         fullName: {
             type: DataTypes.STRING(50),
-            allowNull: true,
         }
     }, {
         timestamps: true
