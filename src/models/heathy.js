@@ -9,13 +9,9 @@ module.exports = (sequelize, DataTypes) => {
             currentWeight:{
                 type: DataTypes.FLOAT
             },
-            time:{
-                type: DataTypes.DATE
-            }
         },{
-            timestamps: false
+            timestamps: true,
         }
-
     )
     return Healthy
 }

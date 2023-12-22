@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
         host:dbConfig.HOST,
         port:dbConfig.port,
         dialect:dbConfig.dialect,
-        logging: true,
+        logging: false,
         pool:{
             max:dbConfig.pool.max,
             min:dbConfig.pool.min,
@@ -29,7 +29,7 @@ sequelize.authenticate()
 const db={}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ alter: true })
     .then(() => {
         console.log('yes re-sync done!');
     })
@@ -50,19 +50,22 @@ db.personalInfo = require('./personalInfo.js')(sequelize, DataTypes)
 db.comment = require('./comment.js')(sequelize, DataTypes)
 db.likePost= require('./likePost.js')(sequelize, DataTypes)
 db.dishCategory= require('./dishCategory.js')(sequelize, DataTypes)
-db.admin = require('./admin.js')(sequelize, DataTypes)
-db.role = require('./roleAdmin.js')(sequelize, DataTypes)
+// db.admin = require('./admin.js')(sequelize, DataTypes)
+// db.role = require('./roleAdmin.js')(sequelize, DataTypes)
 db.food_lunch = require('./food_lunch.js')(sequelize, DataTypes)
 db.foodCategory = require('./foodCategory.js')(sequelize, DataTypes)
 db.likeDish = require('./likeDish.js')(sequelize, DataTypes)
 db.reportPost = require('./reportPost.js')(sequelize, DataTypes)
 db.healthy =  require('./heathy')(sequelize, DataTypes)
+db.userFollow = require('./userFollow.js')(sequelize, DataTypes)
+
+
 
 
 //admin
-db.admin.belongsTo(db.role,{foreignKey: 'roleId',onDelete:'cascade',onUpdate:'cascade'});
-//roleAdmin
-db.role.hasMany(db.admin,{foreignKey: 'roleId',onDelete:'cascade',onUpdate:'cascade'});
+// db.admin.belongsTo(db.role,{foreignKey: 'roleId',onDelete:'cascade',onUpdate:'cascade'});
+// //roleAdmin
+// db.role.hasMany(db.admin,{foreignKey: 'roleId',onDelete:'cascade',onUpdate:'cascade'});
 //user
 
 db.user.hasMany(db.post, { foreignKey: 'from_user_id',onUpdate:'cascade',onDelete:'cascade' });
@@ -76,6 +79,8 @@ db.user.hasMany(db.likePost,{foreignKey:'userId',onDelete:'cascade',onUpdate:'ca
 db.user.hasMany(db.likeDish,{foreignKey:'userId',onDelete:'cascade',onUpdate:'cascade'})
 db.user.hasMany(db.image,{foreignKey:'userId',onDelete:'cascade',onUpdate:'cascade'})
 db.user.hasMany(db.healthy,{foreignKey:'userId',onDelete:'cascade',onUpdate:'cascade'})
+db.user.hasMany(db.userFollow,{foreignKey:'userId',onDelete:'cascade',onUpdate:'cascade'})
+db.userFollow.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpdate:'cascade'});
 //healthy
 db.healthy.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpdate:'cascade'});
 //healthy_goal
@@ -83,7 +88,6 @@ db.healthyGoal.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpda
 //personalInfo
 db.personalInfo.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpdate:'cascade'});
 //post
-
 
 db.post.belongsTo(db.user, { foreignKey: 'from_user_id',onUpdate:'cascade',onDelete:'cascade'});
 db.post.belongsTo(db.user, { foreignKey: 'with_user_id',onUpdate:'cascade',onDelete:'cascade'});
@@ -115,14 +119,14 @@ db.image.belongsTo(db.post,{foreignKey:'postId',onDelete:'cascade',onUpdate:'cas
 //lunch
 
 db.lunch.belongsToMany(db.food,{through:db.food_lunch, onDelete:'cascade',onUpdate:'cascade'})
-db.lunch.belongsToMany(db.nutrition_diary,{through:'lunch_nutrition',onDelete:'cascade',onUpdate:'cascade'})
+db.lunch.belongsTo(db.nutrition_diary,{foreignKey: "nutritionDiaryId",onDelete:'cascade',onUpdate:'cascade'})
 //nutrition_diary
-db.nutrition_diary.belongsToMany(db.exercise,{through:'exercise_nutrition',onDelete:'cascade',onUpdate:'cascade'})
-db.nutrition_diary.belongsToMany(db.lunch,{through:'lunch_nutrition',onDelete:'cascade',onUpdate:'cascade'})
+db.nutrition_diary.hasMany(db.exercise,{foreignKey: "nutritionDiaryId",onDelete:'cascade',onUpdate:'cascade'})
+db.nutrition_diary.hasMany(db.lunch,{foreignKey: "nutritionDiaryId",onDelete:'cascade',onUpdate:'cascade'})
 
 db.nutrition_diary.belongsTo(db.user,{foreignKey:'userId',onDelete:'cascade',onUpdate:'cascade'})
 //exercise
-db.exercise.belongsToMany(db.nutrition_diary,{through:'exercise_nutrition',onDelete:'cascade',onUpdate:'cascade'})
+db.exercise.belongsTo(db.nutrition_diary,{foreignKey:'nutritionDiaryId',onDelete:'cascade',onUpdate:'cascade'})
 //comment
 db.comment.belongsTo(db.post,{foreignKey:'postId',onDelete:'cascade',onUpdate:'cascade'})
 db.comment.belongsTo(db.user,{foreignKey:'userId',onDelete:'cascade',onUpdate:'cascade'})
