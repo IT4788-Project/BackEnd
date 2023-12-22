@@ -80,9 +80,8 @@ const getAllHealthyGoal = async (req, res) => {
             error: e.errors
         });
     }
-
 }
-const getoneHealthyGoal = async (req, res) => {
+const getOneHealthyGoal = async (req, res) => {
     try {
         const{currentTime} = req.body;
         const schema = Yup.object().shape({
@@ -134,7 +133,7 @@ const getoneHealthyGoal = async (req, res) => {
 module.exports = {
     addHealthyGoal,
     getAllHealthyGoal,
-    getoneHealthyGoal
+    getOneHealthyGoal
 }
 
 async function calculateTotalCalo(startDate, endDate) {
