@@ -9,7 +9,7 @@ const router = require('express').Router()
 // use routers
 router.post('/' , healthyGoalController.addHealthyGoal)
 // router.get('/:userId', healthyGoalController.getAllHealthyGoal)
-router.get('/:userId/:healthyGoalId', healthyGoalController.getoneHealthyGoal)
+router.get('/:userId/:healthyGoalId', healthyGoalController.getOneHealthyGoal)
 
 
 module.exports = router
