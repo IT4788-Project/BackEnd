@@ -96,10 +96,10 @@ const getOneHealthyGoal = async (req, res) => {
                 error:e.errors
             });
         }
-        const { userId } = req.params.userId
-        const { healthyGoalId } = req.params.healthyGoalId;
-        console.log("userId : "+userId)
-        console.log("healthyGoalId : "+healthyGoalId)
+        let  userId  = req.params.userId
+        let  healthyGoalId  = req.params.healthyGoalId
+        console.log("userId : "+req.params.userId)
+        console.log("healthyGoalId : "+req.params.healthyGoalId)
         const healthyGoal = await HealthyGoal.findOne({
             where: {
                 id: healthyGoalId,
