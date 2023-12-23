@@ -25,6 +25,8 @@ const nutritionDiaryRouter = require('./src/routers/nutritionDiaryRouter.js');
 const exerciseRouter = require('./src/routers/exerciseRouter.js');
 const healthyGoalRouter = require('./src/routers/healthyGoalRouter.js');
 const lunchRouter = require('./src/routers/lunchRouter.js');
+const food_lunchRouter = require('./src/routers/food_lunchRouter.js');
+const postRouter = require('./src/routers/postRouter.js');
 
 
 // Routes
@@ -35,7 +37,12 @@ app.use('/api/personalInfos',personalInfoRouter);
 app.use('/api/nutritionDiaries',nutritionDiaryRouter);
 app.use('/api/exercises',exerciseRouter);
 app.use('/api/healthyGoals',healthyGoalRouter);
-app.use('/api/lunchs',lunchRouter);
+app.use('/api/lunch',lunchRouter);
+app.use('/api/food_lunch',food_lunchRouter);
+app.use('/api/foods', foodRouter);
+app.use('/api/posts', postRouter);
+app.use('/api/auths', authRouter);
+
 
 
 

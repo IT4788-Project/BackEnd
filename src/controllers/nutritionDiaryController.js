@@ -13,11 +13,9 @@ const addNutritionDiary = async (req, res) => {
                     if (!value) {
                         return false;
                     }
-
                     const regex = /^\d{2}-\d{2}-\d{2}$/;
                     return regex.test(value.toISOString().slice(2, 10));
                 }),
-            userId: Yup.number().required(),
         });
         try {
             await schema.validate(req.body, { abortEarly: false });
@@ -29,7 +27,10 @@ const addNutritionDiary = async (req, res) => {
                     error: e.errors
                 })
         }
-        let {time, userId} = req.body;
+        let {time} = req.body;
+        let {userId }= req.params;
+        console.log("time =", time);
+        console.log("userId =", userId);
         const nutritionDiary = await NutritionDiary.create({
             time,
             userId
@@ -93,7 +94,7 @@ const fineOneNutritionDiary = async (req, res) => {
         return res.status(500).json({
             statusCode: 500,
             message: 'Internal Server Error',
-            error: e.message, // Use e.message for a more accurate error message
+            error: e.message,
         });
     }
 };

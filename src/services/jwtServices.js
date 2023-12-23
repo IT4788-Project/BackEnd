@@ -30,15 +30,11 @@ const JwtService = {
                 console.log("[JWT] JWT flag is not set");
                 throw new Error("[JWT] JWT flag is not set");
             }
-            console.log(">>>>>>>>>1");
-            console.log("header" + request?.headers);
             if (!request?.headers?.authorization || !request?.headers?.authorization?.startsWith("Bearer ")) {
                 console.log("[JWT] JWT token not provided or invalid format");
                 throw new Error("[JWT] JWT token not provided or invalid format");
             }
             const token = request.headers.authorization.split(" ")[1];
-            console.log("[JWT] Authorization Header:", request.headers.authorization);
-            console.log("[JWT] Received Token:", token);
             return token;
         } catch (error) {
             console.log("[JWT] Error getting JWT token:", error.message);
@@ -65,7 +61,6 @@ const JwtService = {
                             new err;
                     });
 
-                    console.log(decoded);
                     if (err != null) throw err;
                     return decoded.payload;
                 }

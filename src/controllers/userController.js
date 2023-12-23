@@ -22,13 +22,13 @@ const signUp = async (req, res) => {
             password: Yup.string().required().min(8),
         });
         try {
-                await schema.validate(req.body, { abortEarly: false });
+            await schema.validate(req.body, {abortEarly: false});
         } catch (e) {
             console.error(e)
             return res.status(400).json({
-                statusCode : 400,
-                message:"Bad Request",
-                error:e.errors
+                    statusCode: 400,
+                    message: "Bad Request",
+                    error: e.errors
                 }
             );
         }
@@ -42,8 +42,8 @@ const signUp = async (req, res) => {
         if (existingUser) {
             console.log("existingUser", existingUser.id);
             return res.status(400).json({
-                statusCode : 400,
-                message:"Bad Request",
+                statusCode: 400,
+                message: "Bad Request",
                 error: "User already exits"
             });
         }
@@ -55,13 +55,13 @@ const signUp = async (req, res) => {
         });
         return res.status(201).json({
             statusCode: 201,
-            message:"Created",
-            data : user
+            message: "Created",
+            data: user
         });
     } catch (e) {
-        console.error('Error:', error);
+        console.error('Error:', e);
         return res.status(500).json({
-            statusCode:500,
+            statusCode: 500,
             message: 'Internal Server Error',
             error: e.errors
         });
@@ -92,10 +92,89 @@ const getAllUser = async (req, res) => {
         res.status(500).json({error: 'Internal Server Error'});
     }
 };
+
+const followUser = async (req, res) => {
+    const [followedUser, currentUser] = await Promise.all([
+        User.findByPk(req.params.id),
+        User.findByPk(req.user.id)
+    ]);
+
+    if (!followedUser)
+        return res.status(400).json({error: 'User Invalid'});
+
+    if (currentUser.followings.includes(followedUser.id))
+        return res.status(400).json({error: 'User has been followed'});
+
+    await Promise.all([
+        User.update({
+            followings: [...currentUser.followings, followedUser.id]
+        }, {
+            where: {
+                id: currentUser.id
+            }
+        }),
+        User.update({
+            followers: Array.from(new Set([...followedUser.followers, currentUser.id]))
+        }, {
+            where: {
+                id: followedUser.id
+            }
+        })
+    ])
+
+    return res.status(200).json({
+        statusCode: "ok"
+    })
+}
+
+const unfollowUser = async (req, res) => {
+    const [followedUser, currentUser] = await Promise.all([
+        User.findByPk(req.params.id),
+        User.findByPk(req.user.id)
+    ]);
+
+    if (!followedUser)
+        return res.status(400).json({error: 'User Invalid'});
+
+    if (!currentUser.followings.includes(followedUser.id))
+        return res.status(200).json({
+            statusCode: "ok"
+        })
+
+    await Promise.all([
+        User.update({
+            followings: [...currentUser.followings].filter(item => item !== followedUser.id)
+        }, {
+            where: {
+                id: currentUser.id
+            }
+        }),
+        User.update({
+            followers: [...followedUser.followers].filter(item => item !== currentUser.id)
+        }, {
+            where: {
+                id: followedUser.id
+            }
+        })
+    ])
+
+    return res.status(200).json({
+        statusCode: "ok"
+    })
+}
+
+const getFollows = async (req, res) => {
+    const {followers, followings} = await User.findByPk(req.user.id);
+    return res.status(200).json({
+        followers, followings
+    });
+}
+
 module.exports = {
     signUp,
     updateUser,
     getAllUser,
+    followUser,
+    unfollowUser,
+    getFollows
 };
-
-

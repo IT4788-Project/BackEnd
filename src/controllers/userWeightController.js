@@ -43,6 +43,89 @@ const updateUserWeight = async (req, res) => {
         });
     }
 };
+
+const followUser = async (req, res) => {
+    const [followedUser, currentUser] = await Promise.all([
+        User.findByPk(req.params.id),
+        User.findByPk(req.user.id)
+    ]);
+
+    if (!followedUser)
+        return res.status(400).json({error: 'User Invalid'});
+
+    if (currentUser.followings.includes(followedUser.id))
+        return res.status(400).json({error: 'User has been followed'});
+
+    await Promise.all([
+        User.update({
+            followings: [...currentUser.followings, followedUser.id]
+        }, {
+            where: {
+                id: currentUser.id
+            }
+        }),
+        User.update({
+            followers: Array.from(new Set([...followedUser.followers, currentUser.id]))
+        }, {
+            where: {
+                id: followedUser.id
+            }
+        })
+    ])
+
+    return res.status(200).json({
+        statusCode: "ok"
+    })
+}
+
+const unfollowUser = async (req, res) => {
+    const [followedUser, currentUser] = await Promise.all([
+        User.findByPk(req.params.id),
+        User.findByPk(req.user.id)
+    ]);
+
+    if (!followedUser)
+        return res.status(400).json({error: 'User Invalid'});
+
+    if (!currentUser.followings.includes(followedUser.id))
+        return res.status(200).json({
+            statusCode: "ok"
+        })
+
+    await Promise.all([
+        User.update({
+            followings: [...currentUser.followings].filter(item => item !== followedUser.id)
+        }, {
+            where: {
+                id: currentUser.id
+            }
+        }),
+        User.update({
+            followers: [...followedUser.followers].filter(item => item !== currentUser.id)
+        }, {
+            where: {
+                id: followedUser.id
+            }
+        })
+    ])
+
+    return res.status(200).json({
+        statusCode: "ok"
+    })
+}
+
+const getFollows = async (req, res) => {
+    const {followers, followings} = await User.findByPk(req.user.id);
+    return res.status(200).json({
+        followers, followings
+    });
+}
+
+
 module.exports = {
-    updateUserWeight
+    updateUserWeight,
+    followUser,
+    unfollowUser,
+    getFollows
+
 };

@@ -89,8 +89,7 @@ db.healthyGoal.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpda
 db.personalInfo.belongsTo(db.user,{foreignKey: 'userId',onDelete:'cascade',onUpdate:'cascade'});
 //post
 
-db.post.belongsTo(db.user, { foreignKey: 'from_user_id',onUpdate:'cascade',onDelete:'cascade'});
-db.post.belongsTo(db.user, { foreignKey: 'with_user_id',onUpdate:'cascade',onDelete:'cascade'});
+db.post.belongsTo(db.user, {foreignKey: 'author', onUpdate: 'cascade', onDelete: 'cascade'});
 db.post.hasMany(db.reportPost,{foreignKey:'postId',onDelete:'cascade',onUpdate:'cascade'})
 db.post.hasMany(db.comment,{foreignKey:'postId',onDelete:'cascade',onUpdate:'cascade'})
 db.post.hasMany(db.likePost,{foreignKey:'postId',onDelete:'cascade',onUpdate:'cascade'})
