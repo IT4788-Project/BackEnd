@@ -174,7 +174,7 @@ const checkCode = async (req, res) => {
   try {
     const schema = Yup.object().shape({
       email: Yup.string().required(),
-      verificationCode: Yup.string().required(),
+      verificationCode: Yup.number().required(),
     });
     try {
       await schema.validate(req.body);
@@ -187,11 +187,11 @@ const checkCode = async (req, res) => {
       });
     }
     console.log("verificationCode");
-    const {verificationCode, email} = req.body;
+    const {email, verificationCode} = req.body;
     console.log("code:", verificationCode);
     const hashedVerificationCode = crypto
       .createHash("sha256")
-      .update(verificationCode)
+      .update(verificationCode.toString())
       .digest("hex");
     console.log("hashedToken:", hashedVerificationCode);
     const user = await User.findOne({
@@ -204,21 +204,18 @@ const checkCode = async (req, res) => {
       },
     });
 
-    if (!user) {
+    if (!user)
       return res.status(400).json({
         statusCode: 400,
         message: "Bad Request",
       });
-    }
-    console.log("user:", user.id);
-    console.log("resetUserId:", resetUserId)
-    if (resetUserId === user.id) {
-      res.status(200).json({
-        statusCode: 200,
-        message: "OK",
-        notification: "Valid code",
-      });
-    }
+
+    res.status(200).json({
+      statusCode: 200,
+      message: "OK",
+      notification: "Valid code",
+    });
+
   } catch (e) {
     console.error(e);
     return res.status(500).json({
