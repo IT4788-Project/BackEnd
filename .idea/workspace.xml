@@ -4,48 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/dishCategoryController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/master-data/dish.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/master-data/dishCategory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/master-data/dish_foods.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/master-data/food-tags.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/master-data/food.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/master-data/image.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/tag.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/dishCategoryRouter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/dishRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/globals.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/globals.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/ts4.8/globals.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/ts4.8/globals.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/lru-cache/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lru-cache/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/lru-cache/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lru-cache/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/lru-cache/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lru-cache/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/ms/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/ms/license.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/license.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/ms/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/ms/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/dbConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/dbConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/dishController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/dishController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/foodController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/foodController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/postController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/postController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dish.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/food.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/food.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/food_dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/food_dish.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/foodRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/foodRouter.js" afterDir="false" />
-    </list>
+    <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -182,7 +141,7 @@
       <workItem from="1703262002039" duration="19182000" />
       <workItem from="1703348927359" duration="1185000" />
       <workItem from="1703418854923" duration="9169000" />
-      <workItem from="1703466403037" duration="8619000" />
+      <workItem from="1703466403037" duration="9186000" />
     </task>
     <servers />
   </component>

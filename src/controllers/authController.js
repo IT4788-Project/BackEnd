@@ -174,7 +174,7 @@ const checkCode = async (req, res) => {
   try {
     const schema = Yup.object().shape({
       email: Yup.string().required(),
-      verificationCode: Yup.number().required(),
+      verificationCode: Yup.string().required(),
     });
     try {
       await schema.validate(req.body);
