@@ -1,15 +1,15 @@
 // import controllers review, products
 const healthyGoalController = require('../controllers/healthyGoalController.js')
 
-
+const authMiddleware = require("../middlerwares/authMiddlerware.js")
 // router
 const router = require('express').Router()
 
 
 // use routers
-router.post('/' , healthyGoalController.addHealthyGoal)
+router.post('/', authMiddleware.authMiddleware, healthyGoalController.addHealthyGoal)
 // router.get('/:userId', healthyGoalController.getAllHealthyGoal)
-router.get('/:userId/:healthyGoalId', healthyGoalController.getOneHealthyGoal)
+router.get('/:userId/:healthyGoalId', authMiddleware.authMiddleware, healthyGoalController.getOneHealthyGoal)
 
 
 module.exports = router

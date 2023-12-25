@@ -8,9 +8,9 @@ const router = require('express').Router()
 
 // use routers
 // thêm nhật kí dinh dưỡng cho ngừoi dùng lấy từ body :  time, từ params  : userId
-router.post('/:userId' ,nutritionDiaryController.addNutritionDiary)
+router.post('/:userId', authMiddleware.authMiddleware, nutritionDiaryController.addNutritionDiary)
 // lấy nhật kí dinh dưỡng của người dùng từ params : userId, từ body : time
-router.get('/:userId', nutritionDiaryController.fineOneNutritionDiary);
+router.get('/:userId', authMiddleware.authMiddleware, nutritionDiaryController.fineOneNutritionDiary);
 
 
 module.exports = router

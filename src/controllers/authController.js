@@ -260,8 +260,6 @@ const resetPassword = async (req, res) => {
     user.passwordChangedAt = Date.now();
     user.codeResetExpires = null;
     await user.save();
-    console.log("user:", user.id);
-    console.log("resetUserId:", resetUserId)
     return res.status(200).json({
       statusCode: 200,
       message: 'OK',

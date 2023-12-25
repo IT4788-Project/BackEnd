@@ -1,6 +1,6 @@
 const image_default = [
   {
-    name_path: "",
+    name_path: "/Users/trung/git/BackEnd/src/public/image/dish1.png",
     dishId: 1,
   },
   {
