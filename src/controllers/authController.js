@@ -191,7 +191,7 @@ const checkCode = async (req, res) => {
     console.log("code:", verificationCode);
     const hashedVerificationCode = crypto
       .createHash("sha256")
-      .update(verificationCode.toString())
+      .update(verificationCode)
       .digest("hex");
     console.log("hashedToken:", hashedVerificationCode);
     const user = await User.findOne({
