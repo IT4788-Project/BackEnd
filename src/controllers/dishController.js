@@ -1,91 +1,107 @@
 const db = require('../models')
 const Yup = require('yup');
+const sequelize = require("sequelize");
 // create main Model
 const Dish = db.dish
+const Food = db.food
+const Tag = db.tag
+const Image = db.image
+const DishCategory = db.dishCategory
 // 1. create Dish
-const addDish = async (req, res) => {
-    try {
-        if (!req.body) {
-            return res.status(400).send('Bad Request: Missing request body');
-        }
 
-        const info = {
-            name: req.body.name,
-            dish_description: req.body.dish_description,
-        }
-        console.log('info')
-        console.log(info)
-        const dish = await Dish.create(info)
-        res.status(201).send(dish)
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
+const SearchDishByTagSchema = () => {
+  return Yup.object().shape({
+    tags: Yup.number().required().nullable()
+  });
 }
-// 2. get all dish
-const getAllDish = async (req, res) => {
-    try{
-        const dishs = await Food.findAll({})
-        res.status(200).json({
-            success: true,
-            dishs
-        })
-    }catch (error){
-        console.log(error)
-        res.status(500).json({
-        error: "Internal Server Error"
-        })
-
-    }
-
+const SearchDishByDishCategorySchema = () => {
+  return Yup.object().shape({
+    dishCategoryId: Yup.number().required().nullable()
+  });
 }
-// 3. get single dish
-const getOneDish = async (req, res) => {
-    try{
-        let id = req.params.id
-        const dish = await Food.findOne({ where: { id: id }})
-        res.status(200).send({
-            success: true,
-            dish})
-    }catch (error){
-        console.log(error)
-        res.status(500).json({
-            error: "Internal Server Error"
-        })
-    }
-}
-// 4. update dish
-const updateDish = async (req, res) => {
-    try{
-        let id = req.params.id
-        const dish = await Dish.update(req.body, { where: { id: id }})
-        res.status(200).json({
-            success:true,
-            dish
-        })
-    }catch (error){
-        console.log(error)
-        res.status(500).json({
-            error :"Internal Sever Error"
-        })
-    }
-}
-// 5. delete dish by id
-const deleteDish = async (req, res) => {
-    let id = req.params.id
-    await Dish.destroy({ where: { id: id }} )
-    res.status(200).send('Dish is deleted !')
+const searchDishByDishCategory = async (req, res) => {
+  try {
+    // Validate request parameters
+    await SearchDishByDishCategorySchema().validate(req.params, {abortEarly: false});
 
-}
+    // Fetch data
+    const dishCategories = await DishCategory.findAll({
+      where: {
+        id: req.params.dishCategoryId,
+      },
+      include: [
+        {
+          model: Dish,
+          attributes: ['id', 'name', 'dish_description'],
+          include: [
+            {
+              model: Image,
+              attributes: ['id', 'image_path'],
+            },
+          ],
+        },
+      ],
+    });
 
+    // Return response
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      data: dishCategories,
+    });
+  } catch (e) {
+    // Handle validation or database error
+    return res.status(400).json({
+      statusCode: 400,
+      error: e?.errors || e?.message,
+    });
+  }
+};
 
+// Search dishes by tag
+const searchDishByTag = async (req, res) => {
+  try {
+    // Validate request body
+    await SearchDishByTagSchema().validate(req.body, {abortEarly: false});
 
+    // Fetch data
+    const foods = await Food.findAll({
+      include: [
+        {
+          model: Tag,
+          where: {
+            id: req.body.tags,
+          },
+        },
+      ],
+    });
+    const dishes = await Dish.findAll({
+      include: [
+        {
+          model: Food,
+          where: {
+            id: foods.map(item => item.id),
+          },
+        },
+      ],
+    });
+
+    // Return response
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      data: dishes,
+    });
+  } catch (e) {
+    // Handle validation or database error
+    return res.status(400).json({
+      statusCode: 400,
+      error: e?.errors || e?.message,
+    });
+  }
+};
 
 module.exports = {
-    addDish,
-    getAllDish,
-    getOneDish,
-    updateDish,
-    deleteDish,
-
-}
+  searchDishByTag,
+  searchDishByDishCategory,
+};

@@ -5,19 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/controllers/food_lunchController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/food_lunchRouter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controllers/dishCategoryController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/master-data/dish.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/master-data/dishCategory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/master-data/dish_foods.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/master-data/food-tags.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/master-data/food.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/master-data/image.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/tag.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routers/dishCategoryRouter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routers/dishRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/globals.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/globals.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/ts4.8/globals.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/ts4.8/globals.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/lru-cache/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lru-cache/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/lru-cache/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lru-cache/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/lru-cache/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lru-cache/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/ms/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/ms/license.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/license.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/ms/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/ms/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/ms/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/dbConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/dbConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/dishController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/dishController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/foodController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/foodController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/lunchController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/lunchController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/nutritionDiaryController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/nutritionDiaryController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/postController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/postController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dish.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/food.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/food.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/food_dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/food_dish.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/image.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/foodRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/foodRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/lunchRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/lunchRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/nutritionDiaryRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/nutritionDiaryRouter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +59,9 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -44,6 +74,9 @@
     <selected>-1</selected>
     <servers />
   </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -55,33 +88,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;eu.ydp.idea.ts.spec.generator.settings.spec.template&quot;: &quot;import {$ClassName$} from '$TestsRelativePath$../src/$classRelativePath$/$ClassName$';\n\ndescribe('$ClassName$', () =&gt; {\n  let $ObjName$:$ClassName$;\n\n  beforeEach(() =&gt; {\n    $ObjName$ = new $ClassName$();\n  });\n\n  describe('', () =&gt; {\n    it('', () =&gt; {\n      // given\n\n      // when\n\n      // then\n    });\n  });\n});\n&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/trung/git/BackEnd&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "eu.ydp.idea.ts.spec.generator.settings.spec.template": "import {$ClassName$} from '$TestsRelativePath$../src/$classRelativePath$/$ClassName$';\n\ndescribe('$ClassName$', () => {\n  let $ObjName$:$ClassName$;\n\n  beforeEach(() => {\n    $ObjName$ = new $ClassName$();\n  });\n\n  describe('', () => {\n    it('', () => {\n      // given\n\n      // when\n\n      // then\n    });\n  });\n});\n",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/trung/git/BackEnd/src/routers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "rearrange.code.on.save": "true",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "show.migrate.to.gradle.popup": "false",
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routers" />
+      <recent name="$PROJECT_DIR$/src/models/master-data" />
+      <recent name="$PROJECT_DIR$/src/models" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
@@ -137,7 +179,10 @@
       <workItem from="1703077668549" duration="20137000" />
       <workItem from="1703176874344" duration="1197000" />
       <workItem from="1703179427385" duration="4000" />
-      <workItem from="1703262002039" duration="14331000" />
+      <workItem from="1703262002039" duration="19182000" />
+      <workItem from="1703348927359" duration="1185000" />
+      <workItem from="1703418854923" duration="9169000" />
+      <workItem from="1703466403037" duration="8619000" />
     </task>
     <servers />
   </component>

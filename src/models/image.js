@@ -1,18 +1,15 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const {Sequelize, Model, DataTypes} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
 
-    const Image = sequelize.define("image",{
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        image_path: {
-            type: DataTypes.STRING
-        },
-
-    },{
-        timestamps:false
-    })
-    return Image
+  const Image = sequelize.define("image", {
+    id: {
+      type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+    },
+    image_path: {
+      type: DataTypes.STRING
+    },
+  }, {
+    timestamps: false
+  })
+  return Image
 }
