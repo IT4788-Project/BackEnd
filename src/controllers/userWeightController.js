@@ -7,7 +7,8 @@ const Health = db.health;
 
 const updateUserWeight = async (req, res) => {
   try {
-    const {userId} = req.params;
+    const userId = req.userId;
+    console.log("userId : " + userId)
     const schema = Yup.object().shape({
       currentWeight: Yup.number().required(),
     });
@@ -52,12 +53,14 @@ const updateUserWeight = async (req, res) => {
 };
 const getUserWeight = async (req, res) => {
   try {
-    userId = req.params.userId;
+    const userId = req.userId;
+    console.log("userId : " + userId)
     const health = await Health.findAll({
       where: {
         userId: userId
       }
     });
+    console.log(health);
     if (!health) {
       return res.status(404).json({
         statusCode: 404,

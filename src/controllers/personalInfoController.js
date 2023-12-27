@@ -6,6 +6,18 @@ const Health = db.health;
 // 1. add personal information
 const addPersonalInfo = async (req, res) => {
   try {
+    const userId = req.userId;
+    console.log("userId : " + userId)
+    console.log("currentWeight : ")
+
+    const info = await PersonalInfo.findOne({where: {userId: userId}});
+    if (info) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: "Bad Request",
+        error: "Personal information already exits"
+      });
+    }
     const {
       fullName,
       birthDay,
@@ -17,8 +29,8 @@ const addPersonalInfo = async (req, res) => {
       targetWeight,
       hip,
       waist,
-      userId
     } = req.body;
+
     const schema = Yup.object().shape({
       fullName: Yup.string().required(),
       birthDay: Yup.date().nullable(),
@@ -26,11 +38,10 @@ const addPersonalInfo = async (req, res) => {
       gender: Yup.string().required(),
       nutritionalGoal: Yup.string().nullable(),
       initialWeight: Yup.number().nullable(),
-      currentWeight: Yup.number().nullable(),
+      currentWeight: Yup.number().required(),
       targetWeight: Yup.number().nullable(),
       hip: Yup.number().nullable(),
       waist: Yup.number().nullable(),
-      userId: Yup.number().required(),
     });
     try {
       await schema.validate(req.body);
@@ -66,8 +77,8 @@ const addPersonalInfo = async (req, res) => {
       message: "Created",
       personalInfo,
     });
-  } catch (error) {
-    console.error('Error:', error);
+  } catch (e) {
+    console.error('Error:', e);
     return res.status(500).json({
       statusCode: 500,
       message: 'Internal Server Error',
@@ -79,7 +90,8 @@ const addPersonalInfo = async (req, res) => {
 // 2. get single personal information
 const getOnePersonalInfo = async (req, res) => {
   try {
-    const {userId} = req.params;
+    const userId = req.userId;
+    console.log("userId : " + userId)
     const personalInfo = await PersonalInfo.findOne({where: {userId: userId}});
     if (!personalInfo) {
       return res.status(404).json({
@@ -106,8 +118,9 @@ const getOnePersonalInfo = async (req, res) => {
 // 3. update personal information
 const updatePersonalInfo = async (req, res) => {
   try {
-    const {userId} = req.params;
-    const [updatedRows] = await PersonalInfo.update(req.body, {where: {userId: userId}});
+    const userId = req.userId;
+    console.log("userId : " + userId)
+    const updatedRows = await PersonalInfo.update(req.body, {where: {userId: userId}});
     if (updatedRows === 0) {
       return res.status(404).json({
         statusCode: 404,
@@ -116,12 +129,15 @@ const updatePersonalInfo = async (req, res) => {
       });
     }
     const {currentWeight} = req.body;
-    if (currentWeight !== null) {
-      await Health.create(
+    console.log("currentWeight : " + currentWeight)
+
+    if (currentWeight !== undefined) {
+      await Health.create({
         currentWeight,
         userId
-      );
+      });
     }
+
     res.status(200).json({
       statusCode: 200,
       message: 'OK',
@@ -140,7 +156,8 @@ const updatePersonalInfo = async (req, res) => {
 // 4. delete personal information by userId
 const deletePersonalInfo = async (req, res) => {
   try {
-    const {userId} = req.params;
+    const userId = req.userId;
+    console.log("userId : " + userId)
     const deletedRows = await PersonalInfo.destroy({where: {userId: userId}});
     if (deletedRows === 0) {
       return res.status(404).json({
@@ -163,6 +180,15 @@ const deletePersonalInfo = async (req, res) => {
     });
   }
 };
+const getAllPersonalInfo = async (req, res) => {
+  try {
+    const personalInfo = await PersonalInfo.findAll();
+    res.status(200).json(personalInfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: 'Internal Server Error'});
+  }
+};
 
 
 module.exports = {
@@ -170,4 +196,5 @@ module.exports = {
   getOnePersonalInfo,
   updatePersonalInfo,
   deletePersonalInfo,
+  getAllPersonalInfo
 };
