@@ -30,7 +30,7 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       content: req.body.content,
       isPublic: req.body.isPublic,
-      author: req.user.id
+      author: req.userId
     })
     if (req.body.images)
       await Image.bulkCreate(req.body.images.map(image => {

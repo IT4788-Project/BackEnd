@@ -59,7 +59,7 @@ const login = async (req, res) => {
         error: 'Invalid password.'
       });
     }
-    const accessToken = JwtService.jwtSign(user.id, {expiresIn: '7d'});
+    const accessToken = JwtService.jwtSign({user}, {expiresIn: '7d'});
     const {name, email: userEmail, ...userData} = user.get();
     const text = {
       accessToken,

@@ -2,7 +2,7 @@ const postController = require('../controllers/postController')
 const authMiddleware = require("../middlerwares/authMiddlerware.js")
 
 const router = require('express').Router()
-
+// tao bai viet bai
 router.post('/', authMiddleware.authMiddleware, postController.createPost)
 
 router.get('/:postId', authMiddleware.authMiddleware, postController.getDetailPost)

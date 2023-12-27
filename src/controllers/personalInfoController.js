@@ -6,7 +6,7 @@ const Health = db.health;
 // 1. add personal information
 const addPersonalInfo = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id
     console.log("userId : " + userId)
     console.log("currentWeight : ")
 
@@ -90,7 +90,7 @@ const addPersonalInfo = async (req, res) => {
 // 2. get single personal information
 const getOnePersonalInfo = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id
     console.log("userId : " + userId)
     const personalInfo = await PersonalInfo.findOne({where: {userId: userId}});
     if (!personalInfo) {
@@ -118,7 +118,7 @@ const getOnePersonalInfo = async (req, res) => {
 // 3. update personal information
 const updatePersonalInfo = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id
     console.log("userId : " + userId)
     const updatedRows = await PersonalInfo.update(req.body, {where: {userId: userId}});
     if (updatedRows === 0) {
@@ -156,7 +156,7 @@ const updatePersonalInfo = async (req, res) => {
 // 4. delete personal information by userId
 const deletePersonalInfo = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id
     console.log("userId : " + userId)
     const deletedRows = await PersonalInfo.destroy({where: {userId: userId}});
     if (deletedRows === 0) {
