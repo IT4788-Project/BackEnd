@@ -115,6 +115,14 @@ const updatePersonalInfo = async (req, res) => {
         error: 'Personal information not found'
       });
     }
+    const [heathy] = await Heathy.update(req.body, {where: {userId: userId}});
+    if (heathy === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Personal information not found'
+      });
+    }
     res.status(200).json({
       statusCode: 200,
       message: 'OK',
