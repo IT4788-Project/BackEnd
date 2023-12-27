@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/public/image/dish1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/personalInfoController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/personalInfoController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/master-data/dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/master-data/dish.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/master-data/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/master-data/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/dishCategoryRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/dishCategoryRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/dishRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/dishRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/foodRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/foodRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/food_lunchRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/food_lunchRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/healthyGoalRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/healthyGoalRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/lunchRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/lunchRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/nutritionDiaryRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/nutritionDiaryRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/userRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/userRouter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +144,7 @@
       <workItem from="1703348927359" duration="1185000" />
       <workItem from="1703418854923" duration="9169000" />
       <workItem from="1703466403037" duration="15357000" />
-      <workItem from="1703497952234" duration="3005000" />
+      <workItem from="1703497952234" duration="8048000" />
     </task>
     <servers />
   </component>
