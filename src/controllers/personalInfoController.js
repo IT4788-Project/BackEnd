@@ -2,7 +2,7 @@ const db = require('../models');
 const Yup = require('yup');
 // create main Model
 const PersonalInfo = db.personalInfo;
-const Heathy = db.healthy;
+const Health = db.health;
 // 1. add personal information
 const addPersonalInfo = async (req, res) => {
   try {
@@ -57,7 +57,7 @@ const addPersonalInfo = async (req, res) => {
     console.log("userId : " + userId)
     console.log("currentWeight : " + currentWeight)
 
-    await Heathy.create({
+    await Health.create({
       currentWeight,
       userId
     })
@@ -116,10 +116,12 @@ const updatePersonalInfo = async (req, res) => {
       });
     }
     const {currentWeight} = req.body;
-    const heathy = await Heathy.create(
-      currentWeight,
-      userId
-    );
+    if (currentWeight !== null) {
+      await Health.create(
+        currentWeight,
+        userId
+      );
+    }
     res.status(200).json({
       statusCode: 200,
       message: 'OK',

@@ -57,7 +57,7 @@ db.food_lunch = require('./food_lunch.js')(sequelize, DataTypes)
 db.foodCategory = require('./foodCategory.js')(sequelize, DataTypes)
 db.likeDish = require('./likeDish.js')(sequelize, DataTypes)
 db.reportPost = require('./reportPost.js')(sequelize, DataTypes)
-db.healthy = require('./heathy')(sequelize, DataTypes)
+db.health = require('./health')(sequelize, DataTypes)
 db.userFollow = require('./userFollow.js')(sequelize, DataTypes)
 db.tag = require('./tag.js')(sequelize, DataTypes)
 
@@ -126,11 +126,11 @@ db.user.hasMany(db.comment, {foreignKey: 'userId', onDelete: 'cascade', onUpdate
 db.user.hasMany(db.likePost, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
 db.user.hasMany(db.likeDish, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})
 db.user.hasMany(db.image, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})
-db.user.hasMany(db.healthy, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})
+db.user.hasMany(db.health, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})
 db.user.hasMany(db.userFollow, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})
 db.userFollow.belongsTo(db.user, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
 //healthy
-db.healthy.belongsTo(db.user, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
+db.health.belongsTo(db.user, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
 //healthy_goal
 db.healthyGoal.belongsTo(db.user, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
 //personalInfo

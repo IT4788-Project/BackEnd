@@ -2,7 +2,7 @@ const db = require('../models');
 const Yup = require('yup');
 // create main Model
 const PersonalInfo = db.personalInfo;
-const Heathy = db.heathy;
+const Health = db.health;
 
 
 const updateUserWeight = async (req, res) => {
@@ -21,7 +21,13 @@ const updateUserWeight = async (req, res) => {
       });
     }
     const {currentWeight} = req.body;
-    const [updateWeight] = await Heathy.update({currentWeight, where: {userId: userId}});
+    await Health.create(
+      {
+        currentWeight,
+        userId: userId
+      }
+    );
+
     const [updatedRowsInfo] = await PersonalInfo.update(currentWeight, {where: {userId: userId}});
     if (updatedRowsInfo === 0 && updateWeight === 0) {
       return res.status(404).json({
@@ -47,12 +53,12 @@ const updateUserWeight = async (req, res) => {
 const getUserWeight = async (req, res) => {
   try {
     userId = req.params.userId;
-    const personalInfo = await PersonalInfo.findOne({
+    const health = await Health.findAll({
       where: {
         userId: userId
       }
     });
-    if (!personalInfo) {
+    if (!health) {
       return res.status(404).json({
         statusCode: 404,
         message: "Not Found",
