@@ -86,19 +86,7 @@ const getAllHealthyGoal = async (req, res) => {
 }
 const getOneHealthyGoal = async (req, res) => {
   try {
-    const {currentTime} = req.body;
-    const schema = Yup.object().shape({
-      currentTime: Yup.date().required(),
-    });
-    try {
-      await schema.validate(req.body);
-    } catch (e) {
-      return res.status(400).json({
-        statusCode: 400,
-        message: "Bad Request",
-        error: e.errors
-      });
-    }
+    const currentTime = new Date.now()
     const userId = req.user.id;
     console.log("userId : " + userId)
     let healthyGoalId = req.params.healthyGoalId

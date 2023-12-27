@@ -53,7 +53,7 @@ const addNutritionDiary = async (req, res) => {
 }
 const fineOneNutritionDiary = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id;
     console.log("userId : " + userId)
     const schema = Yup.object().shape({
       time: Yup.date().required(),
@@ -100,8 +100,40 @@ const fineOneNutritionDiary = async (req, res) => {
     });
   }
 };
+const getAllNutritionDiary = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log("userId : " + userId)
+    const nutritionDiary = await NutritionDiary.findAll({
+      where: {
+        userId: userId,
+      },
+    });
+    if (nutritionDiary.length === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Nutrition Diary not found',
+      });
+    }
+    return res.status(200).json({
+      statusCode: 200,
+      message: "OK",
+      data: nutritionDiary,
+    });
+  } catch (e) {
+    console.error('Error:', e);
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.message,
+    });
+  }
+
+}
 
 module.exports = {
   addNutritionDiary,
-  fineOneNutritionDiary
+  fineOneNutritionDiary,
+  getAllNutritionDiary
 }
