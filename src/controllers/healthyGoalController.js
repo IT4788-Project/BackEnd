@@ -86,11 +86,15 @@ const getAllHealthyGoal = async (req, res) => {
 }
 const getOneHealthyGoal = async (req, res) => {
   try {
-    const currentTime = new Date.now()
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
     const userId = req.user.id;
     console.log("userId : " + userId)
     let healthyGoalId = req.params.healthyGoalId
-    console.log("userId : " + req.params.userId)
     console.log("healthyGoalId : " + req.params.healthyGoalId)
     const healthyGoal = await HealthyGoal.findOne({
       where: {
@@ -98,14 +102,14 @@ const getOneHealthyGoal = async (req, res) => {
         userId: userId,
       }
     });
-    if (healthyGoal.length === 0) {
+    if (healthyGoal === 0) {
       return res.status(404).json({
         statusCode: 404,
         message: "Not Found",
         error: 'Healthy Goal not found'
       });
     }
-    let sumCurrentCalo = await calculateTotalCalo(healthyGoal.timeStart, currentTime)
+    let sumCurrentCalo = await calculateTotalCalo(healthyGoal.timeStart, formattedDate)
     res.status(200).json({
       statusCode: 200,
       message: 'OK',
