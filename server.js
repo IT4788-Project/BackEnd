@@ -29,6 +29,7 @@ const food_lunchRouter = require('./src/routers/food_lunchRouter.js');
 const postRouter = require('./src/routers/postRouter.js');
 const dishRouter = require('./src/routers/dishRouter.js');
 const dishCategoryRouter = require('./src/routers/dishCategoryRouter.js');
+const userWeightRouter = require('./src/routers/userWeightRouter.js');
 
 
 // Routes
@@ -46,6 +47,7 @@ app.use('/api/posts', postRouter);
 app.use('/api/auths', authRouter);
 app.use('/api/dishes', dishRouter);
 app.use('/api/dishCategories', dishCategoryRouter);
+app.use('/api/userWeights', userWeightRouter);
 
 
 // Start the server

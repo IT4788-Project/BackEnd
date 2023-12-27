@@ -7,6 +7,7 @@ const router = require('express').Router()
 
 
 // use routers
-router.put('/:userId' ,authMiddleware.authMiddleware, userWeightController.updateUserWeight)
+router.put('/:userId', authMiddleware.authMiddleware, userWeightController.updateUserWeight)
+router.get('/:userId', authMiddleware.authMiddleware, userWeightController.getUserWeight)
 
 module.exports = router

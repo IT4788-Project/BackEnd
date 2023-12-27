@@ -44,8 +44,37 @@ const updateUserWeight = async (req, res) => {
     });
   }
 };
+const getUserWeight = async (req, res) => {
+  try {
+    userId = req.params.userId;
+    const personalInfo = await PersonalInfo.findOne({
+      where: {
+        userId: userId
+      }
+    });
+    if (!personalInfo) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: "Personal information not found for the given user ID",
+      });
+    }
+    res.status(200).json({
+      statusCode: 200,
+      message: "OK",
+      personalInfo,
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      statusCode: 500,
+      error: e?.errors || e?.message
+    });
+  }
+}
 
 module.exports = {
   updateUserWeight,
+  getUserWeight
 
 };
