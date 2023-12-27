@@ -68,7 +68,7 @@ const getUserWeight = async (req, res) => {
     res.status(200).json({
       statusCode: 200,
       message: "OK",
-      personalInfo,
+      health,
     });
   } catch (e) {
     console.error(e);
