@@ -34,19 +34,31 @@ const userWeightRouter = require('./src/routers/userWeightRouter.js');
 
 // Routes
 app.use('/api/users', userRouter);
+// api/foods
 app.use('/api/foods', foodRouter);
+// api/auths
 app.use('/api/auths', authRouter);
+// api/personalInfos
 app.use('/api/personalInfos', personalInfoRouter);
+// api/nutritionDiaries
 app.use('/api/nutritionDiaries', nutritionDiaryRouter);
+// api/exercises
 app.use('/api/exercises', exerciseRouter);
+// api/healthyGoals
 app.use('/api/healthyGoals', healthyGoalRouter);
+// api/lunch
 app.use('/api/lunch', lunchRouter);
+// api/food_lunch
 app.use('/api/food_lunch', food_lunchRouter);
+// api/foods ko can vi da co o tren
 app.use('/api/foods', foodRouter);
+// api/posts
 app.use('/api/posts', postRouter);
-app.use('/api/auths', authRouter);
+// api/dishes
 app.use('/api/dishes', dishRouter);
+// api/dishCategories
 app.use('/api/dishCategories', dishCategoryRouter);
+// api/userWeights
 app.use('/api/userWeights', userWeightRouter);
 
 

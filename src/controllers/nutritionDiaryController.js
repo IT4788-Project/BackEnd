@@ -6,7 +6,7 @@ const {Op} = require('sequelize');
 //addNutritionDiary nhan vao xác nhận
 const addNutritionDiary = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id;
     console.log("userId : " + userId)
     const schema = Yup.object().shape({
       time: Yup.date()

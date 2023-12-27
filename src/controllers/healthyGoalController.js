@@ -8,7 +8,7 @@ const Nutrition = db.nutrition_diary;
 // 1. add personal information
 const addHealthyGoal = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id;
     console.log("userId : " + userId)
     const {targetName, currentWeight, targetWeight, sumCalories, timeStart, timeEnd} = req.body;
     const schema = Yup.object().shape({
@@ -56,7 +56,7 @@ const addHealthyGoal = async (req, res) => {
 };
 const getAllHealthyGoal = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id;
     console.log("userId : " + userId)
     const healthyGoal = await HealthyGoal.findAll({
       where: {
@@ -99,7 +99,7 @@ const getOneHealthyGoal = async (req, res) => {
         error: e.errors
       });
     }
-    const userId = req.userId;
+    const userId = req.user.id;
     console.log("userId : " + userId)
     let healthyGoalId = req.params.healthyGoalId
     console.log("userId : " + req.params.userId)
@@ -133,12 +133,78 @@ const getOneHealthyGoal = async (req, res) => {
   }
 
 }
+const deleteHealthyGoal = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log("userId : " + userId)
+    let healthyGoalId = req.params.healthyGoalId
+    console.log("userId : " + req.params.userId)
+    console.log("healthyGoalId : " + req.params.healthyGoalId)
+    const healthyGoal = await HealthyGoal.destroy({
+      where: {
+        id: healthyGoalId,
+        userId: userId,
+      }
+    });
+    if (healthyGoal === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Healthy Goal not found'
+      });
+    }
+    res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      notification: "Xóa thành công"
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+}
+const updateHealthyGoal = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log("userId : " + userId)
+    let healthyGoalId = req.params.healthyGoalId
+    console.log("userId : " + req.params.userId)
+    console.log("healthyGoalId : " + req.params.healthyGoalId)
+    const healthyGoal = await HealthyGoal.update(req.body, {where: {id: healthyGoalId, userId: userId}});
+    if (healthyGoal === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'healthyGoal information not found'
+      });
+    }
+    res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      notification: "Cập nhật thành công"
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+
+}
 
 
 module.exports = {
   addHealthyGoal,
   getAllHealthyGoal,
-  getOneHealthyGoal
+  getOneHealthyGoal,
+  deleteHealthyGoal,
+  updateHealthyGoal
 }
 
 async function calculateTotalCalo(startDate, endDate) {
