@@ -109,7 +109,14 @@ const getOneHealthyGoal = async (req, res) => {
         error: 'Healthy Goal not found'
       });
     }
-    let sumCurrentCalo = await calculateTotalCalo(healthyGoal.timeStart, formattedDate)
+    console.log("healthyGoal.timeStart : " + healthyGoal.timeStart)
+    console.log("formattedDate : " + formattedDate)
+    let sumCurrentCalo = 0;
+    if (healthyGoal.timeEnd >= formattedDate) {
+      sumCurrentCalo = await calculateTotalCalo(healthyGoal.timeStart, formattedDate)
+    } else {
+      sumCurrentCalo = await calculateTotalCalo(healthyGoal.timeStart, healthyGoal.timeEnd)
+    }
     res.status(200).json({
       statusCode: 200,
       message: 'OK',
