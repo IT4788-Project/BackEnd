@@ -121,6 +121,7 @@ const updatePersonalInfo = async (req, res) => {
     const userId = req.user.id
     console.log("userId : " + userId)
     const [updatedRows] = await PersonalInfo.update(req.body, {where: {userId: userId}});
+    console.log("updatedRows : " + updatedRows)
     if (updatedRows === 0) {
       return res.status(404).json({
         statusCode: 404,

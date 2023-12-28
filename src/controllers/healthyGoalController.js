@@ -166,7 +166,7 @@ const updateHealthyGoal = async (req, res) => {
     let healthyGoalId = req.params.healthyGoalId
     console.log("userId : " + req.params.userId)
     console.log("healthyGoalId : " + req.params.healthyGoalId)
-    const healthyGoal = await HealthyGoal.update(req.body, {where: {id: healthyGoalId, userId: userId}});
+    const [healthyGoal] = await HealthyGoal.update(req.body, {where: {id: healthyGoalId, userId: userId}});
     if (healthyGoal === 0) {
       return res.status(404).json({
         statusCode: 404,

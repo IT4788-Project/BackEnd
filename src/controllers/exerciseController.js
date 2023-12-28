@@ -80,7 +80,9 @@ const updateExercise = async (req, res) => {
   try {
     const exerciseId = req.params.exerciseId;
     const nutritionDiaryId = req.params.nutritionDiaryId;
-    const exercise = await Exercise.update(req.body, {
+    console.log("exerciseId : " + exerciseId)
+    console.log("nutritionDiaryId : " + nutritionDiaryId)
+    const [exercise] = await Exercise.update(req.body, {
       where: {
         id: exerciseId,
         nutritionDiaryId: nutritionDiaryId,
