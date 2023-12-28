@@ -61,7 +61,7 @@ const getUserWeight = async (req, res) => {
       }
     });
     console.log(health);
-    if (!health) {
+    if (health.length === 0) {
       return res.status(404).json({
         statusCode: 404,
         message: "Not Found",
