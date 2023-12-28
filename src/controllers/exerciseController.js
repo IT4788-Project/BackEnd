@@ -9,6 +9,7 @@ const NutritionDiary = db.nutrition_diary;
 const addExercise = async (req, res) => {
   try {
     const nutritionDiaryId = req.params.nutritionDiaryId;
+    console.log("nutritionDiaryId : " + nutritionDiaryId)
     const schema = Yup.object().shape({
       exerciseTime: Yup.string().required(),
       exercise_name: Yup.string().required(),
