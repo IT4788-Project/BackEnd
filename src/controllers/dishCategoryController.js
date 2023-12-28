@@ -10,15 +10,24 @@ const Tag = db.tag
 const getAllDishCategory = async (req, res) => {
   try {
     const dishCategories = await DishCategory.findAll({});
+    if (dishCategories.length === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found: DishCategory not found",
+      });
+    }
+
     return res.status(200).json({
       statusCode: 200,
       message: "Created",
       data: dishCategories
     });
   } catch (e) {
-    return res.status(400).json({
-      statusCode: 400,
-      error: e?.errors || e?.message
+    console.log(e);
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
     })
   }
 }

@@ -1,7 +1,7 @@
 const dbConfig = require('../config/dbConfig.js')
 const {Sequelize, DataTypes} = require('sequelize');
 
-const food_tags_default = require('./master-data/food-tags.js');
+const tags_default = require('./master-data/tags.js');
 const food_default = require('./master-data/food.js');
 const dish_default = require('./master-data/dish.js');
 const dish_food_default = require('./master-data/dish_foods.js');
@@ -63,50 +63,63 @@ db.tag = require('./tag.js')(sequelize, DataTypes)
 
 db.sequelize.sync({force: process.env.SYNC_INSERT_DATA === 'true' || false})
   .then(async () => {
-      console.log('yes re-sync done!');
-      const insertData = process.env.SYNC_INSERT_DATA === 'true' || false;
-      if (Boolean(insertData)) {
-        console.log('yes insert master data done!');
-        await db.tag.bulkCreate(food_tags_default);
-        await db.dish.bulkCreate(dish_default);
-        await Promise.all(food_default.map(async (food) => {
-          const newFood = await db.food.create({
-            name: food.name,
-            calories: food.calories,
-            glucozo: food.glucozo,
-            lipit: food.lipit,
-            protein: food.protein,
-            vitamin: food.vitamin,
-            unit: food.unit,
-          });
-          const tags = await db.tag.findAll({where: {id: food.tags}});
-          tags.forEach(async tag => {
-            await newFood.addTag(tag);
-          })
-        }))
-        await Promise.all(dish_category_default.map(async (dishCategory) => {
-          const newDish = await db.dishCategory.create({
-            name: dishCategory.name,
-          })
-          const dishes = await db.dish.findAll({where: {id: dishCategory.dishes}});
-          dishes.forEach(async dish => {
-            await newDish.addDish(dish)
-          });
-        }))
-        await db.food_dish.bulkCreate(dish_food_default)
-          .catch(error => {
-              console.error('Error syncing the database:', error);
-            }
-          )
-        await db.image.bulkCreate(image_default)
-          .catch(error => {
-              console.error('Error syncing the database:', error);
-            }
-          )
+    console.log('yes re-sync done!');
+    const insertData = process.env.SYNC_INSERT_DATA === 'true' || false;
+    if (Boolean(insertData)) {
+      console.log('yes insert master data done!');
+      await db.tag.bulkCreate(tags_default);
+      await db.dish.bulkCreate(dish_default);
+      await Promise.all(food_default.map(async (food) => {
+        const newFood = await db.food.create({
+          name: food.name,
+          calories: food.calories,
+          glucozo: food.glucozo,
+          lipit: food.lipit,
+          protein: food.protein,
+          vitamin: food.vitamin,
+          unit: food.unit,
+        });
+        const tags = await db.tag.findAll({where: {id: food.tags}});
+        tags.forEach(async tag => {
+          await newFood.addTag(tag);
+        })
+      }))
+      await Promise.all(dish_category_default.map(async (dishCategory) => {
+        const newDish = await db.dishCategory.create({
+          name: dishCategory.name,
+        });
+        const dishes = await db.dish.findAll({where: {id: dishCategory.dishes}});
+        dishes.forEach(async dish => {
+          await newDish.addDish(dish);
 
-      }
+        });
+      }));
+      await Promise.all(dish_default.map(async (dishData) => {
+        try {
+          const existingDish = await db.dish.findOne({where: {name: dishData.name}});
+          if (existingDish) {
+            const tags = await db.tag.findAll({where: {id: dishData.tags}});
+            await existingDish.addTags(tags);
+            console.log(`Tags associated with dish: ${dishData.name}`);
+          } else {
+            console.error(`Dish not found for name: ${dishData.name}`);
+          }
+        } catch (error) {
+          console.error(`Error associating tags with dish: ${dishData.name}`, error);
+        }
+      }));
+      await db.food_dish.bulkCreate(dish_food_default)
+        .catch(error => {
+          console.error('Error syncing the database:', error);
+        });
+
+      await db.image.bulkCreate(image_default)
+        .catch(error => {
+          console.error('Error syncing the database:', error);
+        });
     }
-  )
+  });
+
 
 // db.sequelize.sync({alter: true})
 //   .then(() => {
@@ -154,12 +167,14 @@ db.food.belongsToMany(db.dish, {through: db.food_dish, onDelete: 'cascade', onUp
 db.food.belongsToMany(db.lunch, {through: db.food_lunch, onDelete: 'cascade', onUpdate: 'cascade'})
 db.food.belongsToMany(db.foodCategory, {through: 'food_category', onDelete: 'cascade', onUpdate: 'cascade'})
 db.food.belongsToMany(db.tag, {through: 'foods_tags', onDelete: 'cascade', onUpdate: 'cascade'})
-
+//tag
 db.tag.belongsToMany(db.food, {through: 'foods_tags', onDelete: 'cascade', onUpdate: 'cascade'})
+db.tag.belongsToMany(db.dish, {through: 'dishes_tags', onDelete: 'cascade', onUpdate: 'cascade'})
 
 //
 db.foodCategory.belongsToMany(db.food, {through: 'food_category', onDelete: 'cascade', onUpdate: 'cascade'})
 //dish
+db.dish.belongsToMany(db.tag, {through: 'dishes_tags', onDelete: 'cascade', onUpdate: 'cascade'})
 db.dish.belongsToMany(db.dishCategory, {through: 'dish_category', onDelete: 'cascade', onUpdate: 'cascade'})
 db.dish.belongsToMany(db.food, {through: db.food_dish, onDelete: 'cascade', onUpdate: 'cascade'})
 db.dish.hasMany(db.image, {foreignKey: 'dishId', onDelete: 'cascade', onUpdate: 'cascade'});

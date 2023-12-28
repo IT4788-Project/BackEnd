@@ -1,4 +1,4 @@
-const food_tags_default = [
+const tags_default = [
   {
     name: "Calo thấp",
   },
@@ -22,4 +22,4 @@ const food_tags_default = [
   },
 ];
 
-module.exports = food_tags_default;
+module.exports = tags_default;
