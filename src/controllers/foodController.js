@@ -23,6 +23,13 @@ const CreateFoodSchema = () => {
 const getAllfood = async (req, res) => {
   try {
     let foods = await Food.findAll({})
+    if (foods.length === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Food not found'
+      })
+    }
     res.status(200).json({
       statusCode: 200,
       message: "OK",
@@ -73,9 +80,49 @@ const createFood = async (req, res) => {
     })
   }
 }
+const getOneFoodByTag = async (req, res) => {
+  try {
+    let tagId = req.params.tagId
+    const tag = await Tag.findOne({
+      where: {
+        id: tagId,
+      },
+      include: [
+        {
+          model: Food,
+          attributes: ['id', 'name', 'calories', 'glucozo', 'lipit', 'protein', 'vitamin', 'unit'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+      through: {
+        attributes: [],
+      },
+    });
+    if (!tag) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: 'Not Found',
+      });
+    }
+    // Return response
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      data: tag,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      statusCode: 500,
+      error: e?.errors || e?.message,
+    });
+  }
+}
 
 module.exports = {
   getAllfood,
   getOneFood,
-  createFood
+  createFood,
+  getOneFoodByTag
 }

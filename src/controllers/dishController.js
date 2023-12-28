@@ -207,6 +207,7 @@ const getRandomDish = async (req, res) => {
   }
 
 }
+
 module.exports = {
   searchDishByTag,
   searchDishByDishCategory,

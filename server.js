@@ -30,6 +30,7 @@ const postRouter = require('./src/routers/postRouter.js');
 const dishRouter = require('./src/routers/dishRouter.js');
 const dishCategoryRouter = require('./src/routers/dishCategoryRouter.js');
 const userWeightRouter = require('./src/routers/userWeightRouter.js');
+const tagRouter = require('./src/routers/tagRouter.js');
 
 
 // Routes
@@ -51,7 +52,7 @@ app.use('/api/lunch', lunchRouter);
 // api/food_lunch
 app.use('/api/food_lunch', food_lunchRouter);
 // api/foods ko can vi da co o tren
-app.use('/api/foods', foodRouter);
+app.use('/api/foods/', foodRouter);
 // api/posts
 app.use('/api/posts', postRouter);
 // api/dishes
@@ -60,6 +61,8 @@ app.use('/api/dishes', dishRouter);
 app.use('/api/dishCategories', dishCategoryRouter);
 // api/userWeights
 app.use('/api/userWeights', userWeightRouter);
+// api/tags
+app.use('/api/tags', tagRouter);
 
 
 // Start the server
