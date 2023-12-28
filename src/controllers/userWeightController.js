@@ -53,7 +53,7 @@ const updateUserWeight = async (req, res) => {
 };
 const getUserWeight = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id;
     console.log("userId : " + userId)
     const health = await Health.findAll({
       where: {

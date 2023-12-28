@@ -170,14 +170,14 @@ db.image.belongsTo(db.post, {foreignKey: 'postId', onDelete: 'cascade', onUpdate
 //lunch
 
 db.lunch.belongsToMany(db.food, {through: db.food_lunch, onDelete: 'cascade', onUpdate: 'cascade'})
-db.lunch.belongsToMany(db.nutrition_diary, {through: 'lunch_nutrition', onDelete: 'cascade', onUpdate: 'cascade'})
+db.lunch.belongsTo(db.nutrition_diary, {foreignKey: 'nutritionDiaryId', onDelete: 'cascade', onUpdate: 'cascade'})
 //nutrition_diary
-db.nutrition_diary.belongsToMany(db.exercise, {through: 'exercise_nutrition', onDelete: 'cascade', onUpdate: 'cascade'})
-db.nutrition_diary.belongsToMany(db.lunch, {through: 'lunch_nutrition', onDelete: 'cascade', onUpdate: 'cascade'})
+db.nutrition_diary.hasMany(db.exercise, {foreignKey: 'nutritionDiaryId', onDelete: 'cascade', onUpdate: 'cascade'})
+db.nutrition_diary.hasMany(db.lunch, {foreignKey: 'nutritionDiaryId', onDelete: 'cascade', onUpdate: 'cascade'})
 
 db.nutrition_diary.belongsTo(db.user, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})
 //exercise
-db.exercise.belongsToMany(db.nutrition_diary, {through: 'exercise_nutrition', onDelete: 'cascade', onUpdate: 'cascade'})
+db.exercise.belongsTo(db.nutrition_diary, {foreignKey: 'nutritionDiaryId', onDelete: 'cascade', onUpdate: 'cascade'})
 //comment
 db.comment.belongsTo(db.post, {foreignKey: 'postId', onDelete: 'cascade', onUpdate: 'cascade'})
 db.comment.belongsTo(db.user, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'})

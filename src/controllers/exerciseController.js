@@ -13,7 +13,6 @@ const addExercise = async (req, res) => {
       exerciseTime: Yup.string().required(),
       exercise_name: Yup.string().required(),
       exercise_description: Yup.string().max(255).required(),
-
     });
     try {
       await schema.validate(req.body, {abortEarly: false});
@@ -32,7 +31,6 @@ const addExercise = async (req, res) => {
       exercise_description,
       nutritionDiaryId
     });
-
     return res.status(201).json({
       statusCode: 201,
       message: "Created",
@@ -81,13 +79,13 @@ const updateExercise = async (req, res) => {
   try {
     const exerciseId = req.params.exerciseId;
     const nutritionDiaryId = req.params.nutritionDiaryId;
-    const [affectedRows] = await Exercise.update(req.body, {
+    const exercise = await Exercise.update(req.body, {
       where: {
         id: exerciseId,
         nutritionDiaryId: nutritionDiaryId,
       }
     });
-    if (affectedRows === 0) {
+    if (exercise === 0) {
       return res.status(404).json({
         statusCode: 404,
         message: "Not Found",

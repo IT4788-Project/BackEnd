@@ -11,6 +11,7 @@ const router = require('express').Router()
 router.post('/', authMiddleware.authMiddleware, nutritionDiaryController.addNutritionDiary)
 // lấy nhật kí dinh dưỡng của người dùng từ params : userId, từ body : time
 router.get('/', authMiddleware.authMiddleware, nutritionDiaryController.fineOneNutritionDiary);
+// lấy toàn bộ dữ liệu từ bảng nutrition diary
 
 
 module.exports = router
