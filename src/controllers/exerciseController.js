@@ -96,6 +96,22 @@ const updateExercise = async (req, res) => {
     const nutritionDiaryId = req.params.nutritionDiaryId;
     console.log("exerciseId : " + exerciseId)
     console.log("nutritionDiaryId : " + nutritionDiaryId)
+    if (req.body.exerciseTime) {
+      const exercise1 = await Exercise.findOne({
+        where: {
+          id: exerciseId,
+          nutritionDiaryId: nutritionDiaryId,
+          exerciseTime: req.body.exerciseTime
+        }
+      });
+      if (exercise1) {
+        return res.status(400).json({
+          statusCode: 400,
+          message: "Bad Request",
+          error: 'Exercise already exists',
+        });
+      }
+    }
     const [exercise] = await Exercise.update(req.body, {
       where: {
         id: exerciseId,

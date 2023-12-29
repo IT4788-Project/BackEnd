@@ -160,6 +160,22 @@ const updateLunch = async (req, res) => {
   try {
     const lunchId = req.params.lunchId;
     const nutritionDiaryId = req.params.nutritionDiaryId;
+    if (req.body.timeLunch) {
+      const checkLunch = await Lunch.findOne({
+        where: {
+          id: lunchId,
+          nutritionDiaryId: nutritionDiaryId,
+          timeLunch: req.body.timeLunch,
+        },
+      });
+      if (checkLunch) {
+        return res.status(400).json({
+          statusCode: 400,
+          message: "Bad Request",
+          error: 'Lunch already exists',
+        });
+      }
+    }
     const lunch = await Lunch.findByPk(lunchId);
     if (!lunch) {
       return res.status(404).json({
