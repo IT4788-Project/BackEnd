@@ -26,6 +26,20 @@ const addExercise = async (req, res) => {
       })
     }
     let {exerciseTime, exercise_name, exercise_description} = req.body;
+    const checkExercise = await Exercise.findOne({
+      where: {
+        id: nutritionDiaryId,
+        exerciseTime: exerciseTime,
+
+      },
+    });
+    if (checkExercise) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: "Bad Request",
+        error: 'Exercise already exists',
+      });
+    }
     const exercise = await Exercise.create({
       exerciseTime,
       exercise_name,

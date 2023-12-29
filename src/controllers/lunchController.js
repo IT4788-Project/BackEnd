@@ -27,6 +27,19 @@ const addLunch = async (req, res) => {
       })
     }
     let {timeLunch, name} = req.body;
+    const checkLunch = await Lunch.findOne({
+      where: {
+        nutritionDiaryId: nutritionDiaryId,
+        timeLunch: timeLunch,
+      },
+    });
+    if (checkLunch) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: "Bad Request",
+        error: 'Lunch already exists',
+      });
+    }
     const lunch = await Lunch.create({
       timeLunch,
       name,
