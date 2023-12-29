@@ -29,6 +29,19 @@ const addNutritionDiary = async (req, res) => {
         error: e.errors
       })
     }
+    const checkNutritionDiary = await NutritionDiary.findOne({
+      where: {
+        userId: userId,
+        time: req.body.time,
+      },
+    });
+    if (checkNutritionDiary) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: "Bad Request",
+        error: 'Nutrition Diary already exists',
+      });
+    }
     let {time} = req.body;
     console.log("time =", time);
     console.log("userId =", userId);
