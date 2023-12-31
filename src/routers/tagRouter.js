@@ -3,7 +3,7 @@ const authMiddleware = require("../middlerwares/authMiddlerware.js")
 
 const router = require('express').Router()
 // tao bai viet viet\
-router.get('/tagname/', authMiddleware.authMiddleware, tagController.findTagByNames)
+router.post('/tagname/', authMiddleware.authMiddleware, tagController.findTagByNames)
 router.get('/', authMiddleware.authMiddleware, tagController.getAllTag)
 
 module.exports = router

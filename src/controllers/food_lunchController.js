@@ -15,10 +15,8 @@ const Food = db.food;
 const addFood_lunch = async (req, res) => {
   const {foods} = req.body;
   const {lunchId} = req.params;
-
   // Validate the payload using yup
   const isValidPayload = await validatePayload({foods});
-
   if (!isValidPayload) {
     return res.status(400).json({
       statusCode: 400,

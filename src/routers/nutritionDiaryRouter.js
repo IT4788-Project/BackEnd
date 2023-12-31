@@ -9,6 +9,7 @@ const router = require('express').Router()
 // use routers
 // thêm nhật kí dinh dưỡng cho ngừoi dùng lấy từ body :  time, từ params  : userId
 // dau vao la ví dụ:   "time": "2021-05-05"
+// req.user ->nutritionDiaryController.addNutritionDiary
 router.post('/', authMiddleware.authMiddleware, nutritionDiaryController.addNutritionDiary)
 // lấy nhật kí dinh dưỡng của người dùng từ params : userId, từ body : time
 router.post('/getOne', authMiddleware.authMiddleware, nutritionDiaryController.fineOneNutritionDiary);

@@ -31,7 +31,7 @@ const dishRouter = require('./src/routers/dishRouter.js');
 const dishCategoryRouter = require('./src/routers/dishCategoryRouter.js');
 const userWeightRouter = require('./src/routers/userWeightRouter.js');
 const tagRouter = require('./src/routers/tagRouter.js');
-
+const adminRouter = require('./src/routers/adminRouter.js');
 
 // Routes
 app.use('/api/users', userRouter);
@@ -63,6 +63,8 @@ app.use('/api/dishCategories', dishCategoryRouter);
 app.use('/api/userWeights', userWeightRouter);
 // api/tags
 app.use('/api/tags', tagRouter);
+// api/admin
+app.use('/api/admin', adminRouter)
 
 
 // Start the server

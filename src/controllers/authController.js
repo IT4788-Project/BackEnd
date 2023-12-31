@@ -227,11 +227,13 @@ const checkCode = async (req, res) => {
 };
 const resetPassword = async (req, res) => {
   try {
+
     const schema = Yup.object().shape({
-      email: Yup.string().required(),
       newPassword: Yup.string().required().min(8),
+      email: Yup.string().required(),
     });
-    let {email, newPassword} = req.body
+    let newPassword = req.body.newPassword
+    let email = req.body.email
     try {
       await schema.validate(req.body);
     } catch (e) {
@@ -243,10 +245,12 @@ const resetPassword = async (req, res) => {
         }
       );
     }
+
     const user = await User.findOne({
       where: {
-        email: email
-      }
+        email: email,
+        status: true
+      },
     });
     if (!user) {
       return res.status(400).json({
