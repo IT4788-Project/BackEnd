@@ -60,7 +60,7 @@ const login = async (req, res) => {
       });
     }
     const accessToken = JwtService.jwtSign({user}, {expiresIn: '7d'});
-    const {name, email: userEmail, ...userData} = user.get();
+    const {name, email: userEmail, password: userPassword, ...userData} = user.get();
     const text = {
       accessToken,
       userData,
