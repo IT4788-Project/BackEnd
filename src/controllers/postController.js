@@ -169,7 +169,6 @@ const getDetailPost = async (req, res) => {
     })
     if (!post)
       throw new Error("Invalid post")
-
     return res.status(200).json({
       statusCode: 200,
       message: "Success",
@@ -200,7 +199,13 @@ const getNewPosts = async (req, res) => {
           model: CommentPost,
           attributes: ['comment', 'date'],
           include: [
-            {model: User, attributes: ['name']}
+            {
+              model: User, attributes: ['id', 'name'],
+              through: {
+                model: Image,
+                attributes: ['image_path'],
+              },
+            }
           ]
         },
         {model: Image, attributes: ['image_path']},
@@ -235,7 +240,14 @@ const getPostByMe = async (req, res) => {
           model: CommentPost,
           attributes: ['comment', 'date'],
           include: [
-            {model: User, attributes: ['name']}
+            {
+              model: User,
+              attributes: ['id', 'name'],
+              through: {
+                model: Image,
+                attributes: ['image_path'],
+              },
+            }
           ]
         },
         {model: Image, attributes: ['image_path']},
