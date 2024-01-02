@@ -206,13 +206,13 @@ const getNewPosts = async (req, res) => {
       message: "Success",
       data: posts
     });
-  } catch (e) {
+  }} catch (e) {
     return res.status(400).json({
       statusCode: 400,
       error: e?.errors || e?.message
     })
   }
-};
+
 const getPostMe = async (req, res) => {
   try {
     const posts = await Post.findAll({
