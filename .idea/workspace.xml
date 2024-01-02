@@ -8,8 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/adminController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/adminController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/adminRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/adminRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/postRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/postRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/userRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/userRouter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -166,7 +167,9 @@
       <workItem from="1704120231883" duration="650000" />
       <workItem from="1704121114822" duration="34000" />
       <workItem from="1704157181945" duration="2550000" />
-      <workItem from="1704161442437" duration="3449000" />
+      <workItem from="1704161442437" duration="22135000" />
+      <workItem from="1704200380140" duration="1742000" />
+      <workItem from="1704213180200" duration="5273000" />
     </task>
     <servers />
   </component>

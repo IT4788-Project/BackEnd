@@ -3,6 +3,7 @@ const {Op} = require('sequelize');
 const Yup = require('yup');
 const Image = db.image;
 const User = db.user;
+const InfoUser = db.personalInfo;
 const ValidationError = require("../utils/apiError")
 
 const signUp = async (req, res) => {
@@ -54,6 +55,9 @@ const signUp = async (req, res) => {
       email,
       password
     });
+    await InfoUser.create({
+      userId: user.id,
+    })
     await Image.create({
       userId: user.id,
     });

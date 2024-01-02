@@ -2,6 +2,8 @@ const db = require('../models')
 const jwt = require('jsonwebtoken');
 const Admins = db.admin
 const User = db.user;
+const {Op} = require('sequelize');
+const Post = db.post;
 const registerAdmins = async (req, res) => {
   try {
     if (!req.body) {
@@ -258,6 +260,58 @@ const deleteUser = async (req, res) => {
     return res.status(500).json({error: 'Internal Server Error'});
   }
 };
+const getAllPostReport = async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      where: {
+        countReport: {
+          [Op.gt]: 0
+        }
+      }
+    });
+    if (posts.length === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Post not found'
+      });
+    }
+    return res.status(200).json({
+      posts
+    });
+  } catch (e) {
+    return res.status(500).json({
+      statusCode: 500,
+      error: e?.errors || e?.message || "Internal Server Error"
+    });
+  }
+};
+const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: "Post not found"
+      });
+    }
+    await post.destroy();
+    return res.status(200).json({
+      statusCode: 200,
+      message: "Deleted successfully",
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+}
+
 module.exports = {
   registerAdmins,
   loginAdmins,
@@ -270,5 +324,7 @@ module.exports = {
   getUserByEmailAndUsername,
   updateUser,
   deleteUser,
-  verifyTokenSysTem
+  verifyTokenSysTem,
+  getAllPostReport,
+  deletePost
 }

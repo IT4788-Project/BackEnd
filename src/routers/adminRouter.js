@@ -10,6 +10,8 @@ router.post('/login', adminsController.loginAdmins)
 
 router.get('/auth/me', adminsController.checkToken)
 
+router.get('/allPost/report', adminsController.verifyToken, adminsController.getAllPostReport)
+
 router.put('/changePassword', adminsController.verifyToken, adminsController.updatePassword)
 
 router.put('/updateUser/:id', adminsController.verifyToken, adminsController.updateUser)
@@ -23,5 +25,8 @@ router.post('/allUserByEmail', adminsController.verifyToken, adminsController.ge
 router.post('/allByEmailUserName', adminsController.verifyToken, adminsController.getUserByEmailAndUsername)
 
 router.delete('/deleteUser/:id', adminsController.verifyTokenSysTem, adminsController.deleteUser)
+
+router.delete('/deletePost/:postId', adminsController.verifyTokenSysTem, adminsController.deletePost)
+
 
 module.exports = router

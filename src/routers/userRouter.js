@@ -3,7 +3,7 @@ const authMiddleware = require("../middlerwares/authMiddlerware.js")
 
 const router = require('express').Router()
 router.put('/:id', authMiddleware.authMiddleware, userController.updateUser)
-router.get('/findUser/name', authMiddleware.authMiddleware, userController.getUserByName)
+router.post('/findUser/name', authMiddleware.authMiddleware, userController.getUserByName)
 router.get('/about/me', authMiddleware.authMiddleware, userController.getUserDisplayInfo)
 router.post('/', userController.signUp)
 router.post('/follow/:id', authMiddleware.authMiddleware, userController.followUser)
