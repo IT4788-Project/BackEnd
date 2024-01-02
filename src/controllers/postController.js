@@ -60,9 +60,7 @@ const reactionPost = async (req, res) => {
 
     if (!postId)
       throw new Error("Invalid post Id");
-
     const post = await Post.findByPk(postId)
-
     if (!post)
       throw new Error("Invalid post")
 
@@ -163,14 +161,11 @@ const commentPost = async (req, res) => {
 const getDetailPost = async (req, res) => {
   try {
     const {postId} = req.params;
-
     if (!postId)
       throw new Error("Invalid post Id");
-
     const post = await Post.findByPk(postId, {
       include: [{model: CommentPost, attributes: ['comment', 'date']}, {model: Image, attributes: ['image_path']}]
     })
-
     if (!post)
       throw new Error("Invalid post")
 
@@ -186,7 +181,6 @@ const getDetailPost = async (req, res) => {
     })
   }
 };
-
 const getNewPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
@@ -198,7 +192,10 @@ const getNewPosts = async (req, res) => {
         model: CommentPost, attributes: ['comment', 'date'], include: [
           {model: User, attributes: ['name']}
         ]
-      }, {model: Image, attributes: ['image_path']}]
+      }, {model: Image, attributes: ['image_path']},
+        {model: LikePost, attributes: ['userId']}
+      ]
+
     })
     return res.status(200).json({
       statusCode: 200,
@@ -212,7 +209,6 @@ const getNewPosts = async (req, res) => {
     })
   }
 };
-
 module.exports = {
   createPost,
   reactionPost,
