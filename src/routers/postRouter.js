@@ -7,13 +7,13 @@ router.post('/', authMiddleware.authMiddleware, postController.createPost)
 
 router.get('/:postId', authMiddleware.authMiddleware, postController.getDetailPost)
 
+router.get('/by/me', authMiddleware.authMiddleware, postController.getPostByMe);
+
 router.get('/', authMiddleware.authMiddleware, postController.getNewPosts)
 
 router.post('/reaction/:postId', authMiddleware.authMiddleware, postController.reactionPost)
 
 router.post('/comment/:postId', authMiddleware.authMiddleware, postController.commentPost)
-
-router.get('/me', authMiddleware.authMiddleware, postController.getPostMe)
 
 
 module.exports = router

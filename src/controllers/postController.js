@@ -183,6 +183,7 @@ const getDetailPost = async (req, res) => {
 };
 const getNewPosts = async (req, res) => {
   try {
+    console.log("userId 123: ", req.user.id)
     const posts = await Post.findAll({
       where: {
         author: {
@@ -219,23 +220,28 @@ const getNewPosts = async (req, res) => {
   }
 };
 
-const getPostMe = async (req, res) => {
+const getPostByMe = async (req, res) => {
   try {
+    console.log("userId:", req.user.id);
     const posts = await Post.findAll({
       where: {
         author: req.user.id
       },
-      order: [
-        ["createdAt", "DESC"]
-      ],
-      include: [{
-        model: CommentPost, attributes: ['comment', 'date'], include: [
-          {model: User, attributes: ['name']}
-        ]
-      }, {model: Image, attributes: ['image_path']},
+      limit: 20,
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: CommentPost,
+          attributes: ['comment', 'date'],
+          include: [
+            {model: User, attributes: ['name']}
+          ]
+        },
+        {model: Image, attributes: ['image_path']},
         {model: LikePost, attributes: ['userId']}
       ]
-    })
+    });
+
     return res.status(200).json({
       statusCode: 200,
       message: "Success",
@@ -245,14 +251,15 @@ const getPostMe = async (req, res) => {
     return res.status(400).json({
       statusCode: 400,
       error: e?.errors || e?.message
-    })
+    });
   }
 };
+
 module.exports = {
   createPost,
   reactionPost,
   commentPost,
   getDetailPost,
   getNewPosts,
-  getPostMe
+  getPostByMe
 }
