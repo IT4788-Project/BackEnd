@@ -184,6 +184,10 @@ const getDetailPost = async (req, res) => {
 const getNewPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
+      where: {
+        author: {
+          [sequelize.Op.not]: req.user.id
+        },
       limit: 20,
       order: [
         ["createdAt", "DESC"]
