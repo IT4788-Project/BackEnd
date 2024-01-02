@@ -131,8 +131,9 @@ const verifyTokenSysTem = (req, res, next) => {
     if (err) {
       return res.status(401).json({error: 'Unauthorized - Invalid token'});
     }
-    if (decoded.isSystem === 0) {
-      return res.status(403).json({error: 'Unauthorized - Invalid token'});
+    if (!decoded.isSystem) {
+      console.log(decoded.isSystem)
+      return res.status(403).json({error: 'Forbidden - You are not system admin'});
     }
     req.userName = decoded.userName
     next();
@@ -269,6 +270,5 @@ module.exports = {
   getUserByEmailAndUsername,
   updateUser,
   deleteUser,
-
   verifyTokenSysTem
 }

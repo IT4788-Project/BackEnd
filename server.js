@@ -32,8 +32,10 @@ const dishCategoryRouter = require('./src/routers/dishCategoryRouter.js');
 const userWeightRouter = require('./src/routers/userWeightRouter.js');
 const tagRouter = require('./src/routers/tagRouter.js');
 const adminRouter = require('./src/routers/adminRouter.js');
-
+const imageRouter = require('./src/routers/imageRouter.js');
 // Routes
+app.use('/api/images', imageRouter);
+// api/users
 app.use('/api/users', userRouter);
 // api/foods
 app.use('/api/foods', foodRouter);

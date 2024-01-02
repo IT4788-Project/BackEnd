@@ -1,6 +1,7 @@
 const db = require('../models');
 const {Op} = require('sequelize');
 const Yup = require('yup');
+const Image = db.image;
 const User = db.user;
 const ValidationError = require("../utils/apiError")
 
@@ -53,6 +54,9 @@ const signUp = async (req, res) => {
       email,
       password
     });
+    await Image.create({
+      userId: user.id,
+    });
     return res.status(201).json({
       statusCode: 201,
       message: "Created",
@@ -83,7 +87,7 @@ const updateUser = async (req, res) => {
     return res.status(500).json({error: 'Internal Server Error'});
   }
 };
-const getAllUser = async (req, res) => {
+const getUserByName = async (req, res) => {
   try {
     let {name} = req.body;
     const users = await User.findAll({
@@ -203,12 +207,99 @@ const getAll = async (req, res) => {
   }
 }
 
+const updateImageUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    console.log("userId : " + userId)
+    const schema = Yup.object().shape({
+      image_path: Yup.string().required(),
+    });
+
+    try {
+      await schema.validate(req.body);
+    } catch (e) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: "Bad Request",
+        error: e.errors
+      });
+    }
+    const {image_path} = req.body;
+    const [updatedRowsInfo] = await Image.update(req.body, {where: {userId: userId}});
+    if (updatedRowsInfo === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Personal information not found'
+      });
+    }
+    res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      notification: "Cập nhật thành công"
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+}
+const getUserDisplayInfo = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log("userId : " + userId)
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'User not found'
+      });
+    }
+    const image = await Image.findOne({
+      where: {
+        userId: userId
+      }
+    });
+    if (!image) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Image not found'
+      });
+    }
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      data: {
+        userId: user.id,
+        userName: user.name,
+        image: image.image_path
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+
+}
+
 module.exports = {
   signUp,
   updateUser,
-  getAllUser,
+  getUserByName,
+  getUserDisplayInfo,
   followUser,
   unfollowUser,
   getFollows,
-  getAll
+  getAll,
+  updateImageUser
 };
