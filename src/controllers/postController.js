@@ -187,31 +187,37 @@ const getNewPosts = async (req, res) => {
       where: {
         author: {
           [sequelize.Op.not]: req.user.id
-        },
+        }
+      },
       limit: 20,
       order: [
         ["createdAt", "DESC"]
       ],
-      include: [{
-        model: CommentPost, attributes: ['comment', 'date'], include: [
-          {model: User, attributes: ['name']}
-        ]
-      }, {model: Image, attributes: ['image_path']},
+      include: [
+        {
+          model: CommentPost,
+          attributes: ['comment', 'date'],
+          include: [
+            {model: User, attributes: ['name']}
+          ]
+        },
+        {model: Image, attributes: ['image_path']},
         {model: LikePost, attributes: ['userId']}
       ]
+    });
 
-    })
     return res.status(200).json({
       statusCode: 200,
       message: "Success",
       data: posts
     });
-  }} catch (e) {
+  } catch (e) {
     return res.status(400).json({
       statusCode: 400,
       error: e?.errors || e?.message
-    })
+    });
   }
+};
 
 const getPostMe = async (req, res) => {
   try {
