@@ -8,6 +8,8 @@ router.post('/', userController.signUp)
 router.post('/follow/:id', authMiddleware.authMiddleware, userController.followUser)
 router.get('/follows', authMiddleware.authMiddleware, userController.getFollows)
 router.post('/unfollow/:id', authMiddleware.authMiddleware, userController.unfollowUser)
+// test
+router.get('/all', userController.getAll)
 
 
 module.exports = router

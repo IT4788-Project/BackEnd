@@ -20,7 +20,7 @@ router.post('/allUserByUsername', adminsController.verifyToken, adminsController
 
 router.post('/allUserByEmail', adminsController.verifyToken, adminsController.getUserByEmail)
 
-router.post('/allEmailUserName', adminsController.verifyToken, adminsController.getUserByEmailAndUsername)
+router.post('/allByEmailUserName', adminsController.verifyToken, adminsController.getUserByEmailAndUsername)
 
 router.delete('/deleteUser/:id', adminsController.verifyToken, adminsController.deleteUser)
 

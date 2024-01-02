@@ -9,7 +9,7 @@ router.get('/:postId', authMiddleware.authMiddleware, postController.getDetailPo
 
 router.get('/', authMiddleware.authMiddleware, postController.getNewPosts)
 
-router.post('/reaction/:postId', authMiddleware.authMiddleware, postController.reactionPost)
+router.get('/reaction/:postId', authMiddleware.authMiddleware, postController.reactionPost)
 
 router.post('/comment/:postId', authMiddleware.authMiddleware, postController.commentPost)
 

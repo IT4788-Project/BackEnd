@@ -164,17 +164,43 @@ const unfollowUser = async (req, res) => {
       }
     })
   ])
-
   return res.status(200).json({
     statusCode: "ok"
   })
 }
 
 const getFollows = async (req, res) => {
-  const {followers, followings} = await User.findByPk(req.user.id);
-  return res.status(200).json({
-    followers, followings
-  });
+  try {
+    const user = await User.findByPk(req.user.id);
+
+    const followers = user.followers || [];
+    const followings = user.followings || [];
+
+    const followersSum = followers.length;
+    const followingsSum = followings.length;
+    return res.status(200).json({
+      followers: followersSum,
+      followings: followingsSum
+    });
+  } catch (e) {
+    return res.status(500).json({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error: e.errors
+    });
+  }
+
+}
+
+const getAll = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: 'Internal Server Error'});
+
+  }
 }
 
 module.exports = {
@@ -183,5 +209,6 @@ module.exports = {
   getAllUser,
   followUser,
   unfollowUser,
-  getFollows
+  getFollows,
+  getAll
 };
