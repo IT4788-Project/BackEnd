@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     time: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      unique: true
     },
 
   }, {

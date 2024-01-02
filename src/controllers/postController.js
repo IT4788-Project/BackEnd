@@ -5,6 +5,7 @@ const Image = db.image;
 const LikePost = db.likePost;
 const CommentPost = db.comment;
 const User = db.user;
+const ReportPost = db.reportPost
 const sequelize = require('sequelize')
 const {singleQuote} = require("nodemailer/.prettierrc");
 
@@ -255,11 +256,75 @@ const getPostByMe = async (req, res) => {
   }
 };
 
+const reportPost = async (req, res) => {
+  try {
+    const {postId} = req.params;
+
+    if (!postId)
+      throw new Error("Invalid post Id");
+    const post = await Post.findByPk(postId)
+    if (!post)
+      throw new Error("Invalid post")
+
+    const hasReport = await ReportPost.findOne({
+      where: {
+        postId: postId,
+        userId: req.user.id
+      }
+    })
+    if (!hasReport) {
+      await Promise.all([
+        Post.update({
+          countReport: sequelize.literal('countReport + 1')
+        }, {
+          where: {
+            id: postId
+          }
+        }),
+        ReportPost.create({
+          postId: postId,
+          userId: req.user.id
+        })
+      ])
+    } else {
+      await Promise.all([
+        Post.update({
+          countReport: sequelize.literal('countReport - 1')
+        }, {
+          where: {
+            id: postId
+          }
+        }),
+        ReportPost.destroy({
+          where: {
+            postId: postId,
+            userId: req.user.id
+          }
+        })
+      ])
+    }
+
+    return res.status(201).json({
+      statusCode: 201,
+      message: "Created",
+      data: "oke"
+    });
+  } catch (e) {
+    return res.status(400).json({
+      statusCode: 400,
+      error: e?.errors || e?.message
+    })
+  }
+
+
+}
+
 module.exports = {
   createPost,
   reactionPost,
   commentPost,
   getDetailPost,
   getNewPosts,
-  getPostByMe
+  getPostByMe,
+  reportPost
 }

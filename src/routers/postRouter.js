@@ -15,5 +15,7 @@ router.post('/reaction/:postId', authMiddleware.authMiddleware, postController.r
 
 router.post('/comment/:postId', authMiddleware.authMiddleware, postController.commentPost)
 
+router.post('/report/:postId', authMiddleware.authMiddleware, postController.reportPost)
+
 
 module.exports = router

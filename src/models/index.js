@@ -121,10 +121,10 @@ db.sequelize.sync({force: process.env.SYNC_INSERT_DATA === 'true' || false})
   });
 
 
-// db.sequelize.sync({alter: true})
-//   .then(() => {
-//     console.log('yes re-sync done!')
-//   })
+db.sequelize.sync({alter: true})
+  .then(() => {
+    console.log('yes re-sync done!')
+  })
 
 //food_tags
 
