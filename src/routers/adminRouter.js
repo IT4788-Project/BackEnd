@@ -22,6 +22,6 @@ router.post('/allUserByEmail', adminsController.verifyToken, adminsController.ge
 
 router.post('/allByEmailUserName', adminsController.verifyToken, adminsController.getUserByEmailAndUsername)
 
-router.delete('/deleteUser/:id', adminsController.verifyToken, adminsController.deleteUser)
+router.delete('/deleteUser/:id', adminsController.verifyTokenSysTem, adminsController.deleteUser)
 
 module.exports = router

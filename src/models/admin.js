@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     fullName: {
       type: DataTypes.STRING(50),
       allowNull: true,
+    },
+    isSystemAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {});
 

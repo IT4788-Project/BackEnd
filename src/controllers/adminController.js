@@ -38,7 +38,11 @@ const loginAdmins = async (req, res) => {
       return res.status(401).json('Incorrect UserName or PassWord');
     }
 
-    const token = jwt.sign({userId: admin.id, userName: admin.userName}, 'LuckyAndPower', {expiresIn: '100h'});
+    const token = jwt.sign({
+      userId: admin.id,
+      userName: admin.userName,
+      isSystem: admin.isSystemAdmin
+    }, 'LuckyAndPower', {expiresIn: '100h'});
     return res.json({token, message: 'Login Success'});
   } catch (error) {
     res.status(500).json({error: "Internal Server Error"});
@@ -108,6 +112,29 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({error: 'Unauthorized - Invalid token'});
     }
     req.userName = decoded.userName;
+    next();
+  });
+};
+const verifyTokenSysTem = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({error: 'Unauthorized - Token not provided'});
+  }
+  // Tách phần "Bearer " khỏi token
+  const token = authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({error: 'Unauthorized - Invalid token format'});
+  }
+  // console.log(token)
+  jwt.verify(token, 'LuckyAndPower', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({error: 'Unauthorized - Invalid token'});
+    }
+    if (decoded.isSystem === 0) {
+      return res.status(403).json({error: 'Unauthorized - Invalid token'});
+    }
+    req.userName = decoded.userName
     next();
   });
 };
@@ -241,5 +268,7 @@ module.exports = {
   getUserByEmail,
   getUserByEmailAndUsername,
   updateUser,
-  deleteUser
+  deleteUser,
+
+  verifyTokenSysTem
 }
