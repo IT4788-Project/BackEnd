@@ -13,5 +13,7 @@ router.post('/reaction/:postId', authMiddleware.authMiddleware, postController.r
 
 router.post('/comment/:postId', authMiddleware.authMiddleware, postController.commentPost)
 
+router.get('/me', authMiddleware.authMiddleware, postController.getPostMe)
+
 
 module.exports = router

@@ -30,7 +30,7 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       content: req.body.content,
       isPublic: req.body.isPublic,
-      author: req.userId
+      author: req.user.id
     })
     if (req.body.images)
       await Image.bulkCreate(req.body.images.map(image => {
@@ -209,10 +209,40 @@ const getNewPosts = async (req, res) => {
     })
   }
 };
+const getPostMe = async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      where: {
+        author: req.user.id
+      },
+      order: [
+        ["createdAt", "DESC"]
+      ],
+      include: [{
+        model: CommentPost, attributes: ['comment', 'date'], include: [
+          {model: User, attributes: ['name']}
+        ]
+      }, {model: Image, attributes: ['image_path']},
+        {model: LikePost, attributes: ['userId']}
+      ]
+    })
+    return res.status(200).json({
+      statusCode: 200,
+      message: "Success",
+      data: posts
+    });
+  } catch (e) {
+    return res.status(400).json({
+      statusCode: 400,
+      error: e?.errors || e?.message
+    })
+  }
+};
 module.exports = {
   createPost,
   reactionPost,
   commentPost,
   getDetailPost,
-  getNewPosts
+  getNewPosts,
+  getPostMe
 }
