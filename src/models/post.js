@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
-
       content: {
         type: DataTypes.STRING(512)
       },

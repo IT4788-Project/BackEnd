@@ -276,9 +276,9 @@ const getAllPostReport = async (req, res) => {
         error: 'Post not found'
       });
     }
-    return res.status(200).json({
+    return res.status(200).json(
       posts
-    });
+    );
   } catch (e) {
     return res.status(500).json({
       statusCode: 500,
