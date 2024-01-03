@@ -190,27 +190,27 @@ const getNewPosts = async (req, res) => {
           [sequelize.Op.not]: req.user.id
         }
       },
-      limit: 20,
-      order: [
-        ["createdAt", "DESC"]
-      ],
-      include: [
-        {
-          model: CommentPost,
-          attributes: ['comment', 'date'],
-          include: [
-            {
-              model: User, attributes: ['id', 'name'],
-              through: {
-                model: Image,
-                attributes: ['image_path'],
-              },
-            }
-          ]
-        },
-        {model: Image, attributes: ['image_path']},
-        {model: LikePost, attributes: ['userId']}
-      ]
+      // limit: 20,
+      // order: [
+      //   ["createdAt", "DESC"]
+      // ],
+      // include: [
+      //   {
+      //     model: CommentPost,
+      //     attributes: ['comment', 'date'],
+      //     include: [
+      //       {
+      //         model: User, attributes: ['id', 'name'],
+      //         through: {
+      //           model: Image,
+      //           attributes: ['image_path'],
+      //         },
+      //       }
+      //     ]
+      //   },
+      //   {model: Image, attributes: ['image_path']},
+      //   {model: LikePost, attributes: ['userId']}
+      // ]
     });
 
     return res.status(200).json({
@@ -225,6 +225,7 @@ const getNewPosts = async (req, res) => {
     });
   }
 };
+
 const getPostByMe = async (req, res) => {
   try {
     console.log("userId:", req.user.id);

@@ -311,6 +311,31 @@ const deletePost = async (req, res) => {
     });
   }
 }
+const sortPost = async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      limit: 10,
+      order: [
+        ['countReport', 'DESC']
+      ]
+    });
+    if (posts.length === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Post not found'
+      });
+    }
+    return res.status(200).json(
+      posts
+    );
+  } catch (e) {
+    return res.status(500).json({
+      statusCode: 500,
+      error: e?.errors || e?.message || "Internal Server Error"
+    });
+  }
+}
 
 module.exports = {
   registerAdmins,
@@ -326,5 +351,6 @@ module.exports = {
   deleteUser,
   verifyTokenSysTem,
   getAllPostReport,
-  deletePost
+  deletePost,
+  sortPost
 }

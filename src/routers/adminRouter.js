@@ -28,5 +28,7 @@ router.delete('/deleteUser/:id', adminsController.verifyTokenSysTem, adminsContr
 
 router.delete('/deletePost/:postId', adminsController.verifyToken, adminsController.deletePost)
 
+router.get('/sort/post/all', adminsController.verifyToken, adminsController.sortPost)
+
 
 module.exports = router
