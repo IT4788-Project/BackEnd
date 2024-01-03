@@ -5,6 +5,7 @@ const Image = db.image;
 const LikePost = db.likePost;
 const CommentPost = db.comment;
 const User = db.user;
+const {Op} = require('sequelize');
 const ReportPost = db.reportPost
 const sequelize = require('sequelize')
 const {singleQuote} = require("nodemailer/.prettierrc");
@@ -165,7 +166,24 @@ const getDetailPost = async (req, res) => {
     if (!postId)
       throw new Error("Invalid post Id");
     const post = await Post.findByPk(postId, {
-      include: [{model: CommentPost, attributes: ['comment', 'date']}, {model: Image, attributes: ['image_path']}]
+      include: [
+        {
+          model: CommentPost,
+          attributes: ['comment', 'date'],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name'],
+              include: {
+                model: Image,
+                attributes: ['image_path'],
+              },
+            },
+          ],
+        },
+        {model: Image, attributes: ['image_path']},
+        {model: LikePost, attributes: ['userId']},
+      ],
     })
     if (!post)
       throw new Error("Invalid post")
@@ -181,57 +199,16 @@ const getDetailPost = async (req, res) => {
     })
   }
 };
+
 const getNewPosts = async (req, res) => {
   try {
-    console.log("userId 123: ", req.user.id)
+    console.log("userId:", req.user.id);
+    const authorId = req.user.id;
     const posts = await Post.findAll({
       where: {
         author: {
-          [sequelize.Op.not]: req.user.id
+          [Op.not]: authorId
         }
-      },
-      // limit: 20,
-      // order: [
-      //   ["createdAt", "DESC"]
-      // ],
-      // include: [
-      //   {
-      //     model: CommentPost,
-      //     attributes: ['comment', 'date'],
-      //     include: [
-      //       {
-      //         model: User, attributes: ['id', 'name'],
-      //         through: {
-      //           model: Image,
-      //           attributes: ['image_path'],
-      //         },
-      //       }
-      //     ]
-      //   },
-      //   {model: Image, attributes: ['image_path']},
-      //   {model: LikePost, attributes: ['userId']}
-      // ]
-    });
-
-    return res.status(200).json({
-      statusCode: 200,
-      message: "Success",
-      data: posts
-    });
-  } catch (e) {
-    return res.status(400).json({
-      statusCode: 400,
-      error: e?.errors || e?.message
-    });
-  }
-};
-
-const getPostByMe = async (req, res) => {
-  try {
-    console.log("userId:", req.user.id);
-    const posts = await Post.findAll({
-      where: {
-        author: req.user.id
       },
       limit: 20,
       order: [["createdAt", "DESC"]],
@@ -243,7 +220,50 @@ const getPostByMe = async (req, res) => {
             {
               model: User,
               attributes: ['id', 'name'],
-              through: {
+              include: {
+                model: Image,
+                attributes: ['image_path'],
+              },
+            },
+          ],
+        },
+        {model: Image, attributes: ['image_path']},
+        {model: LikePost, attributes: ['userId']},
+      ],
+    });
+
+    return res.status(200).json({
+      statusCode: 200,
+      message: "Success",
+      data: posts,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      statusCode: 400,
+      error: e?.errors || e?.message,
+    });
+  }
+};
+
+const getPostByMe = async (req, res) => {
+  try {
+    let authorId = req.user.id;
+    console.log("userId:", req.user.id);
+    const posts = await Post.findAll({
+      where: {
+        author: authorId
+      },
+      limit: 20,
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: CommentPost,
+          attributes: ['comment', 'date'],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name'],
+              include: {
                 model: Image,
                 attributes: ['image_path'],
               },
