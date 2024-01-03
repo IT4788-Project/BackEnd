@@ -212,6 +212,7 @@ const getNewPosts = async (req, res) => {
         {model: LikePost, attributes: ['userId']}
       ]
     });
+
     return res.status(200).json({
       statusCode: 200,
       message: "Success",
@@ -224,7 +225,6 @@ const getNewPosts = async (req, res) => {
     });
   }
 };
-
 const getPostByMe = async (req, res) => {
   try {
     console.log("userId:", req.user.id);
@@ -253,6 +253,7 @@ const getPostByMe = async (req, res) => {
         {model: LikePost, attributes: ['userId']}
       ]
     });
+
     return res.status(200).json({
       statusCode: 200,
       message: "Success",
