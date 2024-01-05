@@ -8,7 +8,6 @@ router.post('/register', adminsController.registerAdmins)
 
 router.post('/login', adminsController.loginAdmins)
 
-router.get('/auth/me', adminsController.checkToken)
 
 router.get('/allPost/report', adminsController.verifyToken, adminsController.getAllPostReport)
 

@@ -60,13 +60,11 @@ const checkToken = async (req, res) => {
     if (decoded) {
       const userName = decoded.userName;
       console.log('User Name:', userName);
-
       // Truy vấn tất cả thông tin trừ mật khẩu từ userName trong cơ sở dữ liệu
       const admin = await Admins.findOne({
         where: {userName: userName},
         attributes: {exclude: ['passWord']}
       });
-
       if (admin) {
         res.status(200).json({admin: admin, message: "Success"});
       } else {
@@ -80,7 +78,6 @@ const checkToken = async (req, res) => {
     res.status(500).json({error: "Internal Server Error"});
   }
 };
-
 const getAdminPassword = async (userName) => {
   try {
     const admin = await Admins.findOne({
@@ -92,8 +89,6 @@ const getAdminPassword = async (userName) => {
     return res.status(404).json({error: "Admin not found"});
   }
 };
-
-
 // Middleware to extract and verify the token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
