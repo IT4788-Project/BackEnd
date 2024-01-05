@@ -184,11 +184,9 @@ const getFollows = async (req, res) => {
     const followers = user.followers || [];
     const followings = user.followings || [];
 
-    const followersSum = followers.length;
-    const followingsSum = followings.length;
     return res.status(200).json({
-      followers: followersSum,
-      followings: followingsSum
+      followers: followers,
+      followings: followings
     });
   } catch (e) {
     return res.status(500).json({
@@ -197,7 +195,6 @@ const getFollows = async (req, res) => {
       error: e.errors
     });
   }
-
 }
 
 const getAll = async (req, res) => {

@@ -7,8 +7,11 @@ const authMiddleware = require("../middlerwares/authMiddlerware.js")
 const router = require('express').Router()
 
 router.get('/tag/:tagId', authMiddleware.authMiddleware, dishController.searchDishByTag)
+
 router.get('/dishCategory/:dishCategoryId', authMiddleware.authMiddleware, dishController.searchDishByDishCategory)
+
 router.get('/:dishId', authMiddleware.authMiddleware, dishController.getOneDish)
+
 router.get('/', authMiddleware.authMiddleware, dishController.getRandomDish)
 
 

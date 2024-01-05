@@ -6,4 +6,5 @@ router.post('/:lunchId', authMiddleware.authMiddleware, food_lunchController.add
 // update food cho lunch dung cho trường hơp vao update lunchd
 router.put('/:lunchId', authMiddleware.authMiddleware, food_lunchController.updateFood_lunch)
 
+
 module.exports = router

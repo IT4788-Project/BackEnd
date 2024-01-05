@@ -8,4 +8,5 @@ const router = require('express').Router()
 
 router.get('/', authMiddleware.authMiddleware, dishCategoryRouter.getAllDishCategory)
 
+
 module.exports = router
