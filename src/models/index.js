@@ -54,7 +54,6 @@ db.dishCategory = require('./dishCategory.js')(sequelize, DataTypes)
 db.admin = require('./admin.js')(sequelize, DataTypes)
 db.role = require('./roleAdmin.js')(sequelize, DataTypes)
 db.food_lunch = require('./food_lunch.js')(sequelize, DataTypes)
-db.foodCategory = require('./foodCategory.js')(sequelize, DataTypes)
 db.likeDish = require('./likeDish.js')(sequelize, DataTypes)
 db.reportPost = require('./reportPost.js')(sequelize, DataTypes)
 db.health = require('./health')(sequelize, DataTypes)
@@ -135,8 +134,7 @@ db.admin.belongsTo(db.role, {foreignKey: 'roleId', onDelete: 'cascade', onUpdate
 db.role.hasMany(db.admin, {foreignKey: 'roleId', onDelete: 'cascade', onUpdate: 'cascade'});
 //user
 
-db.user.hasMany(db.post, {foreignKey: 'from_user_id', onUpdate: 'cascade', onDelete: 'cascade'});
-db.user.hasMany(db.post, {foreignKey: 'with_user_id', onUpdate: 'cascade', onDelete: 'cascade'});
+db.user.hasMany(db.post, {foreignKey: 'author', onUpdate: 'cascade', onDelete: 'cascade'});
 db.user.hasMany(db.nutrition_diary, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
 db.user.hasOne(db.personalInfo, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
 db.user.hasMany(db.healthyGoal, {foreignKey: 'userId', onDelete: 'cascade', onUpdate: 'cascade'});
@@ -165,14 +163,11 @@ db.post.hasMany(db.image, {foreignKey: 'postId', onDelete: 'cascade', onUpdate: 
 //food
 db.food.belongsToMany(db.dish, {through: db.food_dish, onDelete: 'cascade', onUpdate: 'cascade'})
 db.food.belongsToMany(db.lunch, {through: db.food_lunch, onDelete: 'cascade', onUpdate: 'cascade'})
-db.food.belongsToMany(db.foodCategory, {through: 'food_category', onDelete: 'cascade', onUpdate: 'cascade'})
 db.food.belongsToMany(db.tag, {through: 'foods_tags', onDelete: 'cascade', onUpdate: 'cascade'})
 //tag
 db.tag.belongsToMany(db.food, {through: 'foods_tags', onDelete: 'cascade', onUpdate: 'cascade'})
 db.tag.belongsToMany(db.dish, {through: 'dishes_tags', onDelete: 'cascade', onUpdate: 'cascade'})
 
-//
-db.foodCategory.belongsToMany(db.food, {through: 'food_category', onDelete: 'cascade', onUpdate: 'cascade'})
 //dish
 db.dish.belongsToMany(db.tag, {through: 'dishes_tags', onDelete: 'cascade', onUpdate: 'cascade'})
 db.dish.belongsToMany(db.dishCategory, {through: 'dish_category', onDelete: 'cascade', onUpdate: 'cascade'})
