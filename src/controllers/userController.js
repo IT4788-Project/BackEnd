@@ -211,12 +211,10 @@ const getAll = async (req, res) => {
 const updateImageUser = async (req, res) => {
   try {
     const userId = req.user.id;
-
     console.log("userId : " + userId)
     const schema = Yup.object().shape({
       image_path: Yup.string().required(),
     });
-
     try {
       await schema.validate(req.body);
     } catch (e) {
@@ -227,7 +225,11 @@ const updateImageUser = async (req, res) => {
       });
     }
     const {image_path} = req.body;
-    const [updatedRowsInfo] = await Image.update(req.body, {where: {userId: userId}});
+    const [updatedRowsInfo] = await Image.update(req.body, {
+      where: {
+        userId: userId,
+      }
+    });
     if (updatedRowsInfo === 0) {
       return res.status(404).json({
         statusCode: 404,

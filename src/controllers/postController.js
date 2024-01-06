@@ -39,7 +39,7 @@ const createPost = async (req, res) => {
         return {
           image_path: image,
           postId: post.id,
-          userId: req.user.id
+          // userId: req.user.id
         }
       }))
     return res.status(201).json({

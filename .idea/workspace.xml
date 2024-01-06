@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/adminController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/adminController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/adminRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/adminRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/jwtServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/jwtServices.js" afterDir="false" />
-    </list>
+    <list default="true" id="980d3f62-04f0-4e59-88d8-752410f70ee7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -175,7 +169,7 @@
       <workItem from="1704420521132" duration="124000" />
       <workItem from="1704430023081" duration="567000" />
       <workItem from="1704430653979" duration="506000" />
-      <workItem from="1704468799560" duration="977000" />
+      <workItem from="1704468799560" duration="9055000" />
     </task>
     <servers />
   </component>
