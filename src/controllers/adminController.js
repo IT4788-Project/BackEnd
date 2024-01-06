@@ -45,7 +45,12 @@ const loginAdmins = async (req, res) => {
       userName: admin.userName,
       isSystem: admin.isSystemAdmin
     }, 'LuckyAndPower', {expiresIn: '100h'});
-    return res.json({token, message: 'Login Success'});
+    let fullName = admin.fullName;
+    return res.json({
+      token,
+      fullName,
+      message: 'Login Success'
+    });
   } catch (error) {
     res.status(500).json({error: "Internal Server Error"});
   }
@@ -123,7 +128,6 @@ const verifyTokenSysTem = (req, res, next) => {
   if (!token) {
     return res.status(401).json({error: 'Unauthorized - Invalid token format'});
   }
-  // console.log(token)
   jwt.verify(token, 'LuckyAndPower', (err, decoded) => {
     if (err) {
       return res.status(401).json({error: 'Unauthorized - Invalid token'});
@@ -308,12 +312,19 @@ const deletePost = async (req, res) => {
 }
 const sortPost = async (req, res) => {
   try {
+    console.log('sortPost')
     const posts = await Post.findAll({
-      limit: 10,
+      where: {
+        countReport: {
+          [Op.gt]: 0
+        }
+      },
       order: [
         ['countReport', 'DESC']
-      ]
+      ],
+      limit: 10 // Thêm thuộc tính limit để lấy top 10 bài viết
     });
+
     if (posts.length === 0) {
       return res.status(404).json({
         statusCode: 404,
@@ -321,9 +332,8 @@ const sortPost = async (req, res) => {
         error: 'Post not found'
       });
     }
-    return res.status(200).json(
-      posts
-    );
+
+    return res.status(200).json(posts);
   } catch (e) {
     return res.status(500).json({
       statusCode: 500,
@@ -331,6 +341,7 @@ const sortPost = async (req, res) => {
     });
   }
 }
+
 
 module.exports = {
   registerAdmins,
