@@ -350,6 +350,31 @@ const reportPost = async (req, res) => {
 
 
 }
+const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: "Post not found"
+      });
+    }
+    await post.destroy();
+    return res.status(200).json({
+      statusCode: 200,
+      message: "Deleted successfully",
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+}
 
 module.exports = {
   createPost,
@@ -358,5 +383,6 @@ module.exports = {
   getDetailPost,
   getNewPosts,
   getPostByMe,
-  reportPost
+  reportPost,
+  deletePost
 }

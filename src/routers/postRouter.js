@@ -17,5 +17,5 @@ router.post('/comment/:postId', authMiddleware.authMiddleware, postController.co
 
 router.post('/report/:postId', authMiddleware.authMiddleware, postController.reportPost)
 
-
+router.delete('/:postId', authMiddleware.authMiddleware, postController.deletePost)
 module.exports = router
