@@ -353,7 +353,13 @@ const reportPost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const postId = req.params.postId;
-    const post = await Post.findByPk(postId);
+    const userId = req.user.id;
+    const post = await Post.findOne({
+      where: {
+        id: postId,
+        author: userId
+      }
+    });
     if (!post) {
       return res.status(404).json({
         statusCode: 404,
