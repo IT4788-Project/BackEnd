@@ -167,10 +167,7 @@ const getOneDish = async (req, res) => {
 
 const getRandomDish = async (req, res) => {
   try {
-    // ramdom 10 thưc ăn bất kì
     const dishes = await Dish.findAll({
-      order: sequelize.literal('RAND()'),
-      limit: 10,
       include: [
         {
           model: Image,
