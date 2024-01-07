@@ -4,6 +4,12 @@ const Yup = require('yup');
 const Image = db.image;
 const User = db.user;
 const InfoUser = db.personalInfo;
+const Post = db.post;
+const CommentPost = db.comment;
+const LikePost = db.likePost
+const {singleQuote} = require("nodemailer/.prettierrc")
+const {QueryTypes} = require('sequelize')
+
 const ValidationError = require("../utils/apiError")
 
 const signUp = async (req, res) => {
@@ -294,7 +300,71 @@ const getUserDisplayInfo = async (req, res) => {
   }
 
 }
+const getUserById = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findByPk(userId,
+      {
+        include: {
+          model: Image,
+          attributes: ['image_path'],
+        },
+      });
+    if (!user) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'User not found'
+      });
+    }
 
+    const post = await Post.findAll({
+      where: {
+        author: userId
+      },
+      include: [
+        {
+          model: CommentPost,
+          attributes: ['comment', 'date'],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name'],
+              include: {
+                model: Image,
+                attributes: ['image_path'],
+              },
+            },
+          ],
+        },
+        {model: Image, attributes: ['image_path']},
+        {model: LikePost, attributes: ['userId']},
+      ],
+    });
+    if (post.length === 0) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: "Not Found",
+        error: 'Post not found'
+      });
+    }
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'OK',
+      data: {
+        user,
+        post
+      }
+    });
+
+  } catch (e) {
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error',
+      error: e.errors
+    });
+  }
+}
 module.exports = {
   signUp,
   updateUser,
@@ -304,5 +374,6 @@ module.exports = {
   unfollowUser,
   getFollows,
   getAll,
-  updateImageUser
+  updateImageUser,
+  getUserById
 };

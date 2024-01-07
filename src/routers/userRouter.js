@@ -13,6 +13,7 @@ router.post('/follow/:id', authMiddleware.authMiddleware, userController.followU
 router.get('/follows', authMiddleware.authMiddleware, userController.getFollows)
 router.post('/unfollow/:id', authMiddleware.authMiddleware, userController.unfollowUser)
 router.put('/image/update', authMiddleware.authMiddleware, userController.updateImageUser)
+router.get('/findUser/:userId', authMiddleware.authMiddleware, userController.getUserById)
 
 
 module.exports = router
