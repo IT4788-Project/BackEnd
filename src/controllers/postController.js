@@ -183,6 +183,10 @@ const getDetailPost = async (req, res) => {
         },
         {model: Image, attributes: ['image_path']},
         {model: LikePost, attributes: ['userId']},
+        {
+          model: User, attributes: ['id', 'name'],
+          include: {model: Image, attributes: ['image_path']}
+        },
       ],
     })
     if (!post)
@@ -229,6 +233,10 @@ const getNewPosts = async (req, res) => {
         },
         {model: Image, attributes: ['image_path']},
         {model: LikePost, attributes: ['userId']},
+        {
+          model: User, attributes: ['id', 'name'],
+          include: {model: Image, attributes: ['image_path']}
+        },
       ],
     });
 
@@ -271,7 +279,11 @@ const getPostByMe = async (req, res) => {
           ]
         },
         {model: Image, attributes: ['image_path']},
-        {model: LikePost, attributes: ['userId']}
+        {model: LikePost, attributes: ['userId']},
+        {
+          model: User, attributes: ['id', 'name'],
+          include: {model: Image, attributes: ['image_path']}
+        },
       ]
     });
 

@@ -24,7 +24,7 @@ const registerAdmins = async (req, res) => {
     // Handle SequelizeUniqueConstraintError
     if (error.name === 'SequelizeUniqueConstraintError') {
       let customMessage = 'Tai Khoan Da Ton Tai';
-      return res.status(409).json({error: customMessage});
+      return res.status(401).json({error: customMessage});
     }
     res.status(500).json({error: "Internal Server Error"});
   }
