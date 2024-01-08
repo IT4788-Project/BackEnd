@@ -2,6 +2,7 @@ const db = require('../models')
 const jwt = require('jsonwebtoken');
 const Admins = db.admin
 const User = db.user;
+const Image = db.image;
 const {Op} = require('sequelize');
 const Post = db.post;
 const registerAdmins = async (req, res) => {
@@ -266,7 +267,10 @@ const getAllPostReport = async (req, res) => {
         countReport: {
           [Op.gt]: 0
         }
-      }
+      },
+      include: [
+        {model: Image, attributes: ['image_path']},
+      ]
     });
     if (posts.length === 0) {
       return res.status(404).json({
@@ -322,7 +326,10 @@ const sortPost = async (req, res) => {
       order: [
         ['countReport', 'DESC']
       ],
-      limit: 10 // Thêm thuộc tính limit để lấy top 10 bài viết
+      limit: 10,// Thêm thuộc tính limit để lấy top 10 bài viết
+      include: [
+        {model: Image, attributes: ['image_path']},
+      ]
     });
 
     if (posts.length === 0) {
