@@ -83,39 +83,7 @@ db.sequelize.sync({force: process.env.SYNC_INSERT_DATA === 'true' || false})
           await newFood.addTag(tag);
         })
       }))
-      await Promise.all(dish_category_default.map(async (dishCategory) => {
-        const newDish = await db.dishCategory.create({
-          name: dishCategory.name,
-        });
-        const dishes = await db.dish.findAll({where: {id: dishCategory.dishes}});
-        dishes.forEach(async dish => {
-          await newDish.addDish(dish);
 
-        });
-      }));
-      await Promise.all(dish_default.map(async (dishData) => {
-        try {
-          const existingDish = await db.dish.findOne({where: {name: dishData.name}});
-          if (existingDish) {
-            const tags = await db.tag.findAll({where: {id: dishData.tags}});
-            await existingDish.addTags(tags);
-            console.log(`Tags associated with dish: ${dishData.name}`);
-          } else {
-            console.error(`Dish not found for name: ${dishData.name}`);
-          }
-        } catch (error) {
-          console.error(`Error associating tags with dish: ${dishData.name}`, error);
-        }
-      }));
-      await db.food_dish.bulkCreate(dish_food_default)
-        .catch(error => {
-          console.error('Error syncing the database:', error);
-        });
-
-      await db.image.bulkCreate(image_default)
-        .catch(error => {
-          console.error('Error syncing the database:', error);
-        });
     }
   });
 
